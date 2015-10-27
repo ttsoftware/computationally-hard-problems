@@ -22,6 +22,7 @@
 \usepackage{multirow}
 \usepackage{hhline}
 \usepackage{etoolbox}
+\usepackage{tikz}
 
 \usepackage{fancyhdr}
 
@@ -82,13 +83,120 @@
 
 \section{Madragon}
 
-\subsubsection{Determine whether the answer to the given Madragon instance is YES
+\subsection{Determine whether the answer to the given Madragon instance is YES
 or NO}
-\label{subs:Determine whether the answer to the given Madragon instance is YES
+\label{sub:Determine whether the answer to the given Madragon instance is YES
 or NO}
 
-\subsubsection{Show that Madragon is in $NP$}
-\label{subs:Show that Madragon is in $NP$}
+We take the following steps to shift the starting board to the goal board.
+
+\textbf{Starting board}:
+
+\begin{tikzpicture}
+    \draw[step=1cm,black,thick] (0,0) grid (5,5);
+    \fill[black] (0,0) rectangle (5,5);
+    % col 1
+    \fill[white] (0,3) rectangle (1,4);
+    \fill[white] (0,2) rectangle (1,3);
+    \fill[white] (0,1) rectangle (1,2);
+    % col 2
+    \fill[white] (1,3) rectangle (2,4);
+    \fill[white] (1,1) rectangle (2,2);
+    % col 3
+    \fill[white] (2,4) rectangle (3,5);
+    \fill[white] (2,2) rectangle (3,3);
+    % col 4
+    \fill[white] (3,3) rectangle (4,4);
+    \fill[white] (3,1) rectangle (4,2);
+\end{tikzpicture}
+
+We move column 1 one tile up.
+
+\begin{tikzpicture}
+    \draw[step=1cm,black,thick] (0,0) grid (5,5);
+    \fill[black] (0,0) rectangle (5,5);
+    % col 1
+    \fill[white] (0,4) rectangle (1,5);
+    \fill[white] (0,3) rectangle (1,4);
+    \fill[white] (0,2) rectangle (1,3);
+    % col 2
+    \fill[white] (1,3) rectangle (2,4);
+    \fill[white] (1,1) rectangle (2,2);
+    % col 3
+    \fill[white] (2,4) rectangle (3,5);
+    \fill[white] (2,2) rectangle (3,3);
+    % col 4
+    \fill[white] (3,3) rectangle (4,4);
+    \fill[white] (3,1) rectangle (4,2);
+\end{tikzpicture}
+
+We column 2 two tiles down.
+
+\begin{tikzpicture}
+    \draw[step=1cm,black,very thick] (0,0) grid (5,5);
+    \fill[black] (0,0) rectangle (5,5);
+    % col 1
+    \fill[white] (0,4) rectangle (1,5);
+    \fill[white] (0,3) rectangle (1,4);
+    \fill[white] (0,2) rectangle (1,3);
+    % col 2
+    \fill[white] (1,1) rectangle (2,2);
+    \fill[white] (1,4) rectangle (2,5);
+    % col 3
+    \fill[white] (2,4) rectangle (3,5);
+    \fill[white] (2,2) rectangle (3,3);
+    % col 4
+    \fill[white] (3,3) rectangle (4,4);
+    \fill[white] (3,1) rectangle (4,2);
+\end{tikzpicture}
+
+We move row 3 two tiles to the left.
+
+\begin{tikzpicture}
+    \draw[step=1cm,black,very thick] (0,0) grid (5,5);
+    \fill[black] (0,0) rectangle (5,5);
+    % col 1
+    \fill[white] (0,4) rectangle (1,5);
+    \fill[white] (0,3) rectangle (1,4);
+    \fill[white] (0,2) rectangle (1,3);
+    % col 2
+    \fill[white] (1,1) rectangle (2,2);
+    \fill[white] (1,4) rectangle (2,5);
+    % col 3
+    \fill[white] (2,4) rectangle (3,5);
+    \fill[white] (3,2) rectangle (4,3);
+    % col 4
+    \fill[white] (3,3) rectangle (4,4);
+    \fill[white] (3,1) rectangle (4,2);
+\end{tikzpicture}
+
+And now we have made $k = 3$ operations and achieved the goal.
+
+\subsection{Show that Madragon is in $NP$}
+\label{sub:Show that Madragon is in $NP$}
+
+We specify the following randomized deterministic polynomial-bound algorithm $A$, which takes as input a problem instance $X$ containing board states $a$ and $b$ and a random sequence of integers $R$.
+
+\begin{enumerate}
+    \item
+        \begin{enumerate}
+            \item[1a] $R$ is a random sequence of $k$ integers chosen from an even distribution of numbers ranging from 1 to $(m+n)^2$.
+            \item[1b] Every index in $R$ corresponds a step. The value of each index corresponds to a move of either a column or a row. Since there exists $(m+n)^2$ unique moves, the value of $R_i$ will determine which of these moves the algorithm performs at the $i$th step.
+            \item[1c] After $A$ has performed all $i$ steps in $R$, $A$ checks if the board has reached its goal state $b$ and answers YES or NO accordingly.
+        \end{enumerate}
+    \item
+        \begin{enumerate}
+            \item[2a] Since we choose $R$ from an evenly distributed set of all possible combinations of size $\{1, \cdots, (m+n)^2\}^k = (m+n)^{2k}$, we know that if at least one $R$ exists which solves $A(X, R) = YES$, we can choose this $R$ with a probability of $\frac{1}{(m+n)^{2k}} > 0$.
+            \item[2b] If there does not exist an $R$ which solves $A(X, R) = YES$, then the algorithm $A$ will never answer YES since the board cannot arrive at goal board $b$ within $k$ steps given any $R$.
+        \end{enumerate}
+    \item
+        In order to interpret $R$ the algorithm $A$ must generate all possible moves for the given board. This can be done in $O((m+n)^2)$ time. We can perform all steps in $R$ in $O(k)$ time, and check the solution in $O(1)$ time.
+        Thus the algorithm is bound by $O((m+n)^2)$.
+\end{enumerate}
+
+\subsection{Show that Madragon is $NP$-complete}
+\label{sub:Show that Madragon is $NP$-complete}
+
 
 
 \end{document}
