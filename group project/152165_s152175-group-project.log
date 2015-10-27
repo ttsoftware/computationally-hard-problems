@@ -1,12 +1,12 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2014.12.21)  20 OCT 2015 09:13
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2015.2.18)  27 OCT 2015 11:33
 entering extended mode
  \write18 enabled.
  %&-line parsing enabled.
-**"/media/secondary/Copy/Studie/DTU/computationally hard problems/group project
-/152165_s152175-group-project.tex"
+**"/home/rasmus/Documents/Computationally Hard Problems/computationally-hard-pr
+oblems/group project/152165_s152175-group-project.tex"
 
-(/media/secondary/Copy/Studie/DTU/computationally hard problems/group project/1
-52165_s152175-group-project.tex
+(/home/rasmus/Documents/Computationally Hard Problems/computationally-hard-prob
+lems/group project/152165_s152175-group-project.tex
 LaTeX2e <2011/06/27>
 Babel <3.9h> and hyphenation patterns for 78 languages loaded.
 (/usr/share/texlive/texmf-dist/tex/latex/base/article.cls
@@ -970,19 +970,19 @@ Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 94.
  ) 
 Here is how much of TeX's memory you used:
  19852 strings out of 493304
- 359197 string characters out of 6139870
+ 359257 string characters out of 6139871
  483934 words of memory out of 5000000
  22903 multiletter control sequences out of 15000+600000
  12910 words of font info for 50 fonts, out of 8000000 for 9000
  957 hyphenation exceptions out of 8191
- 56i,6n,73p,988b,338s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 56i,6n,73p,1008b,338s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></us
 r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/shar
 e/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texli
 ve/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texlive/texm
 f-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/share/texlive/texmf-dist
 /fonts/type1/public/amsfonts/cm/cmtt10.pfb>
-Output written on 152165_s152175-group-project.pdf (2 pages, 62999 bytes).
+Output written on 152165_s152175-group-project.pdf (2 pages, 63224 bytes).
 PDF statistics:
  73 PDF objects out of 1000 (max. 8388607)
  46 compressed objects within 1 object stream
