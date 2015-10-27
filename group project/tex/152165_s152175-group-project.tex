@@ -197,8 +197,30 @@ We specify the following randomized deterministic polynomial-bound algorithm $A$
 \subsection{Show that Madragon is $NP$-complete}
 \label{sub:Show that Madragon is $NP$-complete}
 
-\subsection{Find an algorithm which solves the optimizing version of Madragon}
-\label{sub:Find an algorithm which solves the optimizing version of Madragon}
+\subsection{Describe the solution for the optimization version of the algorithm}
+\label{sub:Describe the solution for the optimization version of the algorithm}
+
+Our solution assumes, that for any given board $A$, there exists a set of moves $R_0$, such that $A$ may be transformed into any board $B$, where $A$ and $B$ consists of the same number of black and white tiles.
+
+For our optimization algorithm, we utilize the decision algorithm for the problem $A_d$, where given a board $A$, a goal board $B$, and a $k$, the algorithm determines whether it is possible to transform $A$ into $B$, using $k$ moves.
+
+$A_d$ takes the set of possible moves $S = \{s_0, s_1, ...,s_n\}$ and creates a set $R = \{R_0, R_1, ..., R_m\}$, containing every combination of $k$ moves from $S$. As there exist $n$ such moves, we will have $m = n^k$.
+
+If one of these sets will transform board $A$ into goal board $B$, then the algorithm returns YES, else NO.
+
+$A_o$ starts by finding the lowest possible $k$. It does this by feeding increasingly larger $k$ to $A_d$, starting at $1$. When $A_d$ returns YES, we have found the lowest number of moves, that transforms $A$ to $B$. In order to find the moves used to make this optimized transformation, we modify $A_d$ to also return the set of moves $R_0$, that made $A_d$ return YES. $R_0$ in this case will be the set containing the minimum number of moves, that transforms $A$ into $B$.
+
+\subsection{Prove the worst-case running time of your algorithm}
+\label{sub:Prove the worst-case running time of your algorithm}
+
+The running time for $A_o$ is entirely dependant on the running time of $A_d$, as $A_o$ simply calls $A_d$ multiple times to find the optimal solution.
+
+In the worst case, $A_d$ creates $m = n^k$ sets, where each set can be created and checked in constant time. This gives $A_d$ a worst-case running time of $T(A_d) = O(n^k)$.
+
+$A_o$ calls $A_d$ until it has found the optimal value of $k$, which takes $k$ calls. When $k$, and thus the solution $R_0$ has been found, the algorithm terminates, which gives us a running time of $T(A_o) = O(k T(A_d)) = O(kn^k)$
+
+\subsection{implement the algorithm for Madragon}
+\label{sub:implement the algorithm for Madragon}
 
 
 
