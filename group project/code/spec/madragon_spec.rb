@@ -12,11 +12,17 @@ describe Madragon, :type => :class do
         @dragon = Madragon.new
     end
 
-    describe '#check' do
+    describe '#solve' do
 
         it 'checks all possible k permutations' do
 
-            result = @dragon.check @start_board, @goal_board
+            pp @start_board.rows
+            pp @goal_board.rows
+
+            result = @dragon.solve @start_board, @goal_board
+
+            expect(@start_board.rows.hash).to_not eq @goal_board.rows.hash
+            expect(result).to_not eq false
 
             pp result
         end

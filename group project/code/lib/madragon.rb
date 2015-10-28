@@ -2,25 +2,25 @@ require 'pp'
 
 class Madragon
 
-    def check(start_board, goal_board)
+    def solve(start_board, goal_board, k=start_board.k)
 
-        k_perm = generate_k_permutations(start_board, 2)
+        k_perm = generate_k_permutations(start_board, k)
 
         k_perm.each { |move_sequence|
             next_board = start_board.clone
 
             move_sequence.each { |move|
-                next_board = next_board.move(move[0], move[1])
+                next_board.move!(move[0], move[1])
             }
 
-            return start_board.k, move_sequence if next_board == goal_board
+            return k, move_sequence if next_board == goal_board
         }
+
+        return false
     end
 
     def generate_k_permutations(start_board, k)
-
         possible_moves = generate_possible_moves start_board
-
         return possible_moves.repeated_permutation(k).to_a
     end
 
