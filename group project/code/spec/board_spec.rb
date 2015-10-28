@@ -22,16 +22,6 @@ describe Board, type: :class do
 
     describe '#move' do
 
-        it 'returns a moved object' do
-
-            before_move = @start.rows.hash
-            new_board = @start.move 6, 1
-            after_move = @start.rows.hash
-
-            expect(before_move).to eq after_move
-            expect(before_move).to_not eq new_board.rows.hash
-        end
-
         it 'moves the given object' do
 
             before_move = @start.rows.hash
