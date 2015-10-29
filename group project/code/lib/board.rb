@@ -11,6 +11,9 @@ class Board
         @rows = rows
     end
 
+    # Moves the current Board instance's row/col steps times
+    # @param [Integer] rowcol
+    # @param [Integer] steps
     def move!(rowcol, steps)
         if rowcol < @row_count
             # we move a row
@@ -30,6 +33,7 @@ class Board
 
     private
 
+    # We override .clone since we wish to copy all referenced integers.
     def initialize_clone(source)
         clone = super
         clone.rows = Marshal.load(Marshal.dump(source.rows))
