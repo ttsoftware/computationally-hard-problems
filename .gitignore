@@ -8,11 +8,11 @@ excercise\ 4
 excercise\ 4/*
 excercise\ 5
 excercise\ 5/*
-*.fls
-*.log
-*.aux
-*.out
-*.fdb_latexmk
-*.pdf
+group\ project/tex/*.fls
+group\ project/tex/*.log
+group\ project/tex/*.aux
+group\ project/tex/*.out
+group\ project/tex/*.fdb_latexmk
+group\ project/tex/*.pdf
 group\ project/code/.idea
 group\ project/code/.idea/*
