@@ -12,10 +12,11 @@ class Madragon
 
         possible_moves = generate_possible_moves start_board
 
+        pp "possible moves: #{possible_moves.length}"
+
         k = 1
         solution = false
         until solution or k > max_k
-            pp "possible moves: #{possible_moves.length}"
             pp "trying #{possible_moves.length**k} #{k}-length permutations"
 
             solution = solve_permutation(start_board, goal_board, possible_moves, k, [], 0, false)
