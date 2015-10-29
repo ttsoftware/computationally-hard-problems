@@ -5,7 +5,7 @@ describe Madragon, :type => :class do
 
     before(:each) do
 
-        file = "#{__dir__}/data/madragon.data"
+        file = "#{__dir__}/data/simple.mad"
         @start_board,
             @goal_board = DataImporter.import file
 
