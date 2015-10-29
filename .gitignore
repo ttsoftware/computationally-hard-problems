@@ -8,4 +8,9 @@ excercise\ 4
 excercise\ 4/*
 excercise\ 5
 excercise\ 5/*
-*.pdf
+**/*.pdf
+**/*.fls
+**/*.log
+**/*.aux
+**/*.out
+**/*.fdb_latexmk

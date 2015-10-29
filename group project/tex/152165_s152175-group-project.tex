@@ -204,7 +204,7 @@ Our solution assumes, that for any given board $A$, there exists a set of moves 
 
 For our optimization algorithm, we utilize the decision algorithm for the problem $A_d$, where given a board $A$, a goal board $B$, and a $k$, the algorithm determines whether it is possible to transform $A$ into $B$, using $k$ moves.
 
-$A_d$ takes the set of possible moves $S = \{s_0, s_1, ...,s_n\}$ and creates a set $R = \{R_0, R_1, ..., R_m\}$, containing every combination of $k$ moves from $S$. As there exist $n$ such moves, we will have $m = n^k$.
+$A_d$ takes the set of possible moves $S = \{s_0, s_1, ...,s_i\}$, where $i = (m+n) \cdot \frac{(m-1) + (n-1)}{2}$, and creates a set $R = \{R_0, R_1, ..., R_j\}$, containing every combination of $k$ moves from $S$. As there exist $i$ such moves, we will have $j = i^k$.
 
 If one of these sets will transform board $A$ into goal board $B$, then the algorithm returns YES, else NO.
 
@@ -215,9 +215,9 @@ $A_o$ starts by finding the lowest possible $k$. It does this by feeding increas
 
 The running time for $A_o$ is entirely dependant on the running time of $A_d$, as $A_o$ simply calls $A_d$ multiple times to find the optimal solution.
 
-In the worst case, $A_d$ creates $m = n^k$ sets, where each set can be created and checked in constant time. This gives $A_d$ a worst-case running time of $T(A_d) = O(n^k)$.
+In the worst case, $A_d$ creates $j = i^k$ sets, where $i = ((m+n) \cdot \frac{(m-1) + (n-1)}{2})$. Each set can be created and checked in constant time. This gives $A_d$ a worst-case running time of $T(A_d) = O(i^k)$.
 
-$A_o$ calls $A_d$ until it has found the optimal value of $k$, which takes $k$ calls. When $k$, and thus the solution $R_0$ has been found, the algorithm terminates, which gives us a running time of $T(A_o) = O(k T(A_d)) = O(kn^k)$
+$A_o$ calls $A_d$ until it has found the optimal value of $k$, which takes $k$ calls. When $k$, and thus the solution $R_0$ has been found, the algorithm terminates, which gives us a running time of $T(A_o) = O(k T(A_d)) = O(k(i^k)$
 
 \subsection{implement the algorithm for Madragon}
 \label{sub:implement the algorithm for Madragon}
