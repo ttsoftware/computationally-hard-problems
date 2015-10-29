@@ -202,17 +202,17 @@ We specify the following randomized deterministic polynomial-bound algorithm $A$
 
 Our solution assumes, that for any given board $A$, there exists a set of moves $R_0$, such that $A$ may be transformed into any given board $B$, where $A$ and $B$ consists of the same number of black and white tiles.
 
-Our optimization algorithm $A_o$ generates the set of possible moves $S = \{s_0, s_1, ...,s_n\}$ and the set $R = \{R_0, R_1, ..., R_m\}$, containing every combination of $k-length$ move-sets from $S$.
+Our optimization algorithm $A_o$ generates the set of possible moves $S = \{s_0, s_1, ...,s_n\}$ and the set $R = \{R_0, R_1, ..., R_m\}$, containing every combination of $k$-length move-sets from $S$.
 
 We run all of the move-sets in $R$ against board $A$, and if one of the sets in $R$ transform board $A$ into goal board $B$, then the algorithm returns the move-set $R_0$, else $false$.
 
-We run this process iteratively starting with $k = 1$ going up to $k = max_k$ where $max_k$ is the $k$ given in the .mad file.
+We run this process iteratively starting with $k = 1$ going up to $k = k_{max}$, where $k_{max}$ is the $k$ given in the .mad file.
 
 \subsection{Prove the worst-case running time of your algorithm}
 \label{sub:Prove the worst-case running time of your algorithm}
-In the worst case, $A_o$ runs through all of the generated sets in $R$. Given that $R$ contains all possible permutations of $k$-length sets we have $|R| = |S|^k = ((m+n)\frac{(m-1)+(n-1)}{2})^k$ since $|S| = ((m+n)\frac{(m-1)+(n-1)}{2})^k$. We can check each of these sets in $O(k)$ time since each set is of length $k$ and each move can be performed in $O(1)$ constant time.
+In the worst case, $A_o$ runs through all of the generated sets in $R$. Given that $R$ contains all possible permutations of $k_{max}$-length sets we have $|R| = |S|^{k_{max}} = ((m+n)\frac{(m-1)+(n-1)}{2})^{k_{max}}$ since $|S| = ((m+n)\frac{(m-1)+(n-1)}{2})^{k_{mx}}$. We can check each of these sets in $O(k_{max})$ time since each set is of length $k_{max}$ and each move can be performed in $O(1)$ constant time. Since we check all values of $k$ up to $k_{max}$, the algorithm is run $k_{max}$ times, but every time $k$ is incremented, the exponent in the calculation of permutation is incremented, which means the running time increases exponentially with $k$. This means that the running time of any iteration with $k < k_{max}$ does not matter in big-O notation.
 
-This gives $A_o$ a worst-case running time of $T(A_o) = O(|S|^k \times k) = O(|S|^k)$.
+This gives $A_o$ a worst-case running time of $T(A_o) = O(k|S|^k) = O(|S|^k)$.
 
 \subsection{implement the algorithm for Madragon}
 \label{sub:implement the algorithm for Madragon}
