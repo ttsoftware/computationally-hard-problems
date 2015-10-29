@@ -1,13 +1,13 @@
 class Board
     attr_accessor :row_count,
                   :col_count,
-                  :k,
+                  :max_k,
                   :rows
 
-    def initialize(row_count, col_count, k, rows=[])
+    def initialize(row_count, col_count, max_k, rows=[])
         @row_count=row_count
         @col_count=col_count
-        @k = k
+        @max_k = max_k
         @rows = rows
     end
 

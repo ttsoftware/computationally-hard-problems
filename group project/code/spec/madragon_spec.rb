@@ -102,7 +102,7 @@ describe Madragon, :type => :class do
 
             file = "#{__dir__}/data/easy-1.mad"
             start_board, goal_board = DataImporter.import file
-            result = @dragon.solve start_board, goal_board, 1
+            result = @dragon.solve start_board, goal_board
 
             expect(result).to_not eq false
 
