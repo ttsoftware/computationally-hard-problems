@@ -71,26 +71,53 @@ describe Madragon, :type => :class do
             pp result
         end
 
-        it 'solves easy-1.mad' do
-
-            file = "#{__dir__}/data/easy-1.mad"
-            start_board, goal_board = DataImporter.import file
+        it 'solves arecibo-6.mad' do
+            start_board, goal_board = DataImporter.import "#{__dir__}/data/arecibo-6.mad"
             result = @dragon.solve start_board, goal_board
 
             expect(result).to_not eq false
 
             pp result
         end
-    end
 
-    describe '#generate_k_permutations' do
+        it 'solves arecibo-7.mad' do
+            start_board, goal_board = DataImporter.import "#{__dir__}/data/arecibo-7.mad"
+            result = @dragon.solve start_board, goal_board
 
-        it 'generates all k move permutations of R in S' do
+            expect(result).to_not eq false
 
-            k = 4
-            k_permutations = @dragon.generate_k_permutations @start_board, k
+            pp result
+        end
 
-            expect(k_permutations.length).to eq ((@start_board.row_count+@start_board.col_count)*(((@start_board.row_count-1)+(@start_board.col_count-1))/2))**k
+        it 'solves arecibo-8.mad' do
+            start_board, goal_board = DataImporter.import "#{__dir__}/data/arecibo-8.mad"
+            result = @dragon.solve start_board, goal_board
+
+            expect(result).to_not eq false
+
+            pp result
+        end
+
+        it 'solves easy-1.mad' do
+
+            file = "#{__dir__}/data/easy-1.mad"
+            start_board, goal_board = DataImporter.import file
+            result = @dragon.solve start_board, goal_board, 1
+
+            expect(result).to_not eq false
+
+            pp result
+        end
+
+        it 'solves 666.mad' do
+
+            file = "#{__dir__}/data/666.mad"
+            start_board, goal_board = DataImporter.import file
+            result = @dragon.solve start_board, goal_board
+
+            expect(result).to_not eq false
+
+            pp result
         end
     end
 

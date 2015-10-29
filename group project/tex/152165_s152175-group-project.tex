@@ -208,7 +208,7 @@ We run all of the move-sets in $R$ against board $A$, and if one of the sets in 
 
 \subsection{Prove the worst-case running time of your algorithm}
 \label{sub:Prove the worst-case running time of your algorithm}
-In the worst case, $A_o$ runs through all of the generated sets in $R$. Given that $R$ contains all possible permutations of $k$-length sets we have $|R| = |S|^k = ((m+n)\frac{(m-1)+(n-1)}{2})^k$ since $|S| = ((m+n)\frac{(m-1)+(n-1)}{2})^k$. We can check each of these sets in $O(k)$ time since each set is of length $k$ and each move can be performed in $O(1)$ constant time.
+In the worst case, $A_o$ runs through all of the generated sets in $R$. Given that $R$ contains all possible permutations of $k$-length sets we have $|R| = |S|^k = ((m+n)\frac{(m-1)+(n-1)}{2})^k$ since $|S| = ((m+n)\frac{(m-1)+(n-1)}{2})^k$. We can check each of these sets in $O(k)$ time since each set is of length $k$ and each move can be performed in $O(1)$ constant time. 
 
 
 This gives $A_o$ a worst-case running time of $T(A_o) = O(|S|^k \times k) = O(|S|^k)$.

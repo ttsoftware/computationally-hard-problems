@@ -10,52 +10,45 @@ class Madragon
     # @return [Object]
     def solve(start_board, goal_board, k=start_board.k)
 
-        generate_k_permutations(start_board, k).each { |move_sequence|
-            next_board = start_board.clone
-
-            move_sequence.each { |move|
-                next_board.move!(move[0], move[1])
-            }
-
-            return k, move_sequence if next_board == goal_board
-        }
-
-        return false
-    end
-
-    # Generates all k-length move-sets for given board start_board
-    # @param [Board] start_board
-    # @param [Integer] k
-    # @return [Array]
-    def generate_k_permutations(start_board, k)
         possible_moves = generate_possible_moves start_board
 
-        pp "possible moves generated: #{possible_moves.length}"
-        pp "trying to generate #{possible_moves.length**k} permutations"
-        pp "should use around #{((possible_moves.length**k)*16)/1000000}MB memory"
+        pp "possible moves: #{possible_moves.length}"
+        pp "trying #{possible_moves.length**k} #{k}-length permutations"
 
-        #return possible_moves.repeated_permutation(k).to_a
-        return repeated_permutations(possible_moves, k, [], [], 0).to_a
+        return repeated_permutations(start_board, goal_board, possible_moves, k, [], 0, false)
     end
 
-    def repeated_permutations(original_array,
-                              length_of_each_permutation,
-                              list_of_permutations,
+    def repeated_permutations(start_board,
+                              goal_board,
+                              possible_moves,
+                              k,
                               index_positions,
-                              index)
-        0.upto(original_array.length - 1) do |index1|
+                              index,
+                              solution)
+
+        0.upto(possible_moves.length - 1) do |index1|
             index_positions[index] = index1
-            if index < length_of_each_permutation - 1
-                repeated_permutations(original_array, length_of_each_permutation, list_of_permutations, index_positions, index + 1)
-            else
-                permutation = Array.new
-                0.upto(length_of_each_permutation - 1) do |index2|
-                    permutation[index2] = original_array[index_positions[index2]]
+
+            if index < k - 1
+                unless solution
+                    solution = repeated_permutations(start_board, goal_board, possible_moves, k, index_positions, index + 1, solution)
                 end
-                list_of_permutations.push(permutation)
+            else
+                permutation = []
+                0.upto(k - 1) do |index2|
+                    permutation[index2] = possible_moves[index_positions[index2]]
+                end
+
+                next_board = start_board.clone
+                permutation.each { |move|
+                    next_board.move!(move[0], move[1])
+                }
+
+                solution = k, permutation if next_board == goal_board
             end
         end
-        list_of_permutations
+
+        return solution
     end
 
     # Generates all possible moves on the board of size start_board.row_count*start_board.col_count

@@ -1,7 +1,11 @@
 GEM
   remote: https://rubygems.org/
   specs:
+    debase (0.2.1)
+      debase-ruby_core_source
+    debase-ruby_core_source (0.8.0)
     diff-lcs (1.2.5)
+    rake (10.4.2)
     rspec (3.3.0)
       rspec-core (~> 3.3.0)
       rspec-expectations (~> 3.3.0)
@@ -15,9 +19,13 @@ GEM
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.3.0)
     rspec-support (3.3.0)
+    ruby-debug-ide (0.6.0)
+      rake (>= 0.8.1)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
+  debase
   rspec (>= 3.3.0)
+  ruby-debug-ide
