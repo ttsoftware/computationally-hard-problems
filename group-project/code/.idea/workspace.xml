@@ -1,37 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="6d7f017b-4bbb-437b-a522-e2d7dd2893f9" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../group project/code/.idea/dictionaries/troels.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../group project/code/.idea/inspectionProfiles/Project_Default.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../group project/code/.idea/inspectionProfiles/profiles_settings.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../group project/code/Gemfile" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../group project/code/Gemfile.lock" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../group project/code/lib/board.rb" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../group project/code/lib/data_importer.rb" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../group project/code/lib/madragon.rb" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../group project/code/madragon" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../group project/code/spec/board_spec.rb" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../group project/code/spec/data/666.mad" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../group project/code/spec/data/arecibo-1.mad" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../group project/code/spec/data/arecibo-2.mad" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../group project/code/spec/data/arecibo-3.mad" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../group project/code/spec/data/arecibo-4.mad" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../group project/code/spec/data/arecibo-5.mad" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../group project/code/spec/data/arecibo-6.mad" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../group project/code/spec/data/arecibo-7.mad" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../group project/code/spec/data/arecibo-8.mad" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../group project/code/spec/data/easy-1.mad" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../group project/code/spec/data/simple.mad" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../group project/code/spec/import_data_spec.rb" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../group project/code/spec/madragon_spec.rb" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../group project/code/spec/spec_helper.rb" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../group project/ex02249_15_Project.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../group project/tex/152165_s152175-group-project.aux" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../group project/tex/152165_s152175-group-project.fdb_latexmk" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../group project/tex/152165_s152175-group-project.out" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../group project/tex/152165_s152175-group-project.tex" afterPath="" />
-    </list>
+    <list default="true" id="6d7f017b-4bbb-437b-a522-e2d7dd2893f9" name="Default" comment="" />
     <ignored path="code.iws" />
     <ignored path=".idea/workspace.xml" />
     <ignored path=".idea/dataSources.local.xml" />
