@@ -18,14 +18,16 @@ class Madragon
             pp "possible moves: #{possible_moves.length}"
             pp "trying #{possible_moves.length**k} #{k}-length permutations"
 
-            solution = repeated_permutations(start_board, goal_board, possible_moves, k, [], 0, false)
+            solution = solve_permutation(start_board, goal_board, possible_moves, k, [], 0, false)
             k = k+1
         end
 
         return solution
     end
 
-    def repeated_permutations(start_board,
+    # Recursively solves the given boards
+    # Returns false if no solution exists
+    def solve_permutation(start_board,
                               goal_board,
                               possible_moves,
                               k,
@@ -38,18 +40,17 @@ class Madragon
 
             if index < k - 1
                 unless solution
-                    solution = repeated_permutations(start_board, goal_board, possible_moves, k, index_positions, index + 1, solution)
+                    solution = solve_permutation(start_board, goal_board, possible_moves, k, index_positions, index + 1, solution)
                 end
             else
+                next_board = start_board.clone
+
                 permutation = []
                 0.upto(k - 1) do |index2|
-                    permutation[index2] = possible_moves[index_positions[index2]]
-                end
-
-                next_board = start_board.clone
-                permutation.each { |move|
+                    move = possible_moves[index_positions[index2]]
                     next_board.move!(move[0], move[1])
-                }
+                    permutation << move
+                end
 
                 solution = k, permutation if next_board == goal_board
             end

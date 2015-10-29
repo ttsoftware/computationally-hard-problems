@@ -1,0 +1,20 @@
+#!/usr/bin/env ruby
+
+require 'optparse'
+require 'pp'
+
+require_relative 'lib/madragon'
+require_relative 'lib/board'
+require_relative 'lib/data_importer'
+
+options = {}
+OptionParser.new do |opts|
+    opts.banner = 'Usage: run-madragon.rb [options]'
+    opts.on('-f', '--file-name <path-to-file.mad>', 'Madragon file') { |v| options[:file_path] = v }
+end.parse!
+
+dragon = Madragon.new
+start_board, goal_board = DataImporter.import options[:file_path]
+result = dragon.solve start_board, goal_board
+
+pp result
