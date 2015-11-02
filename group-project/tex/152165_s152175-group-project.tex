@@ -232,12 +232,12 @@ We specify the following randomized deterministic polynomial-bound algorithm $A$
             the table corresponds to a white tile, and each 1 corresponds to a black tile.}
         \end{figure}
 
-        We choose our final board $b$ as a board of equal size to $a$, but with only the top row colored entirely black. We choose our $k = n\times\frac{|R|}{2}$.
+        We choose our final board $b$ as a board of equal size to $a$, but with only the top row colored entirely black. We choose our $k = n$.
 
         The time complexity of the transformation $T$ is bounded in the size of $B$ and $\Sigma_W$. This is due to the fact that $R$ must be of size $|R| = |\Sigma_W|^B$. Combining the size of $R$ with the fact that we can create the starting board $a$ in $O(n \times |R|)$, we get a total running time complexity of $O(|R|+n \times |R|) = O(n \times |R|) = O(|\Sigma_W|^B)$. As such the transformation $T$ is polynomially-bounded in $B$.
 
         \item[3b]
-        If the answer to $LCS(X, B)$ is YES then the starting board $a$ will contain exactly one row with only black tiles. It will take at most $k = n\times\frac{|R|}{2}$ moves to transform board $a$ into the final board $b$, since it takes $n$ steps to move any row one row up or down and there are $|R|$ total rows. Thus if the answer to $LCS(X, B)$ is YES, then the Madragon answer to $T(X)$ is also YES.
+        If the answer to $LCS(X, B)$ is YES then the starting board $a$ will contain exactly one row with only black tiles. It will take at most $k = n$ moves to transform board $a$ into the final board $b$, since it takes $n$ steps to move any row up or down, using column moves, and there are $n$ total columns. Thus if the answer to $LCS(X, B)$ is YES, then the Madragon answer to $T(X)$ is also YES.
 
         \item[3c]
         Our final board $b$ in $T(X)$ looks the same no matter the given $LCS$ problem - it always contain the entire top row colored black with no other black tiles on the board. A starting board $a$ will never contain any black tiles if the answer to $LCS(X, B)$ is NO. Thus it is impossible for Madragon to answer YES to $T(X)$ if the answer to $LCS(X, B)$ is NO.
