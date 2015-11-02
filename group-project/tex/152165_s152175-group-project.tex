@@ -210,12 +210,42 @@ We run this process iteratively starting with $k = 1$ going up to $k = k_{max}$,
 
 \subsection{Prove the worst-case running time of your algorithm}
 \label{sub:Prove the worst-case running time of your algorithm}
+
 In the worst case, $A_o$ runs through all of the generated sets in $R$. Given that $R$ contains all possible permutations of $k_{max}$-length sets we have $|R| = |S|^{k_{max}} = ((m+n)\frac{(m-1)+(n-1)}{2})^{k_{max}}$ since $|S| = ((m+n)\frac{(m-1)+(n-1)}{2})^{k_{mx}}$. We can check each of these sets in $O(k_{max})$ time since each set is of length $k_{max}$ and each move can be performed in $O(1)$ constant time. Since we check all values of $k$ up to $k_{max}$, the algorithm is run $k_{max}$ times, but every time $k$ is incremented, the exponent in the calculation of permutation is incremented, which means the running time increases exponentially with $k$. This means that the running time of any iteration with $k < k_{max}$ does not matter in big-O notation.
 
 This gives $A_o$ a worst-case running time of $T(A_o) = O(k|S|^k) = O(|S|^k)$.
 
-\subsection{implement the algorithm for Madragon}
-\label{sub:implement the algorithm for Madragon}
+\subsection{Implement the algorithm for Madragon}
+\label{sub:Implement the algorithm for Madragon}
 
+Out implementation can be run by running the file madragon:
+
+\begin{lstlisting}
+./madragon -f <path-to-file.mad>
+\end{lstlisting}
+
+Our implementation returns an array of the following format:
+
+\begin{lstlisting}
+[k, [
+    [row / column, rotations], ..., ...]
+]
+\end{lstlisting}
+
+Where $k$ is the $k$ for which a solution was found, and where $row / column$ is an integer representing which row or column to rotate.
+If the number is less than the number of rows, we rotate the 0-indexed row in the number of rows on the board.
+If the number is greater than or equal to the number of rows, we rotate the 0-indexed column in the number of columns on the board.
+
+$rotations$ correspond to the number of times we rotate the given row or column. We always rotate from right to left or bottom to top.
+
+For the file $arecibo-1.mad$ the result would be:
+
+\begin{lstlisting}
+[1, [[8, 1]]]
+\end{lstlisting}
+
+Indicating that we can solve the board with a 1-length set of moves, and a move-set consisting of a single move where we rotating column 4 one step.
+
+The source code for our implementation can be found on github: \url{https://github.com/ttsoftware/computationally-hard-problems/tree/master/group-project/code}
 
 \end{document}
