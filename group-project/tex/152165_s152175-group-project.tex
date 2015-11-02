@@ -173,7 +173,7 @@ We move row 3 two tiles to the left.
 And now we have made $k = 3$ operations and achieved the goal.
 
 \subsection{Show that Madragon is in $NP$}
-\label{sub:Show that Madragon is in $NP$}
+\label{sub:Show that Madragon is in NP}
 
 We specify the following randomized deterministic polynomial-bound algorithm $A$, which takes as input a problem instance $X$ containing board states $a$ and $b$ and a random sequence of integers $R$.
 
@@ -197,6 +197,37 @@ We specify the following randomized deterministic polynomial-bound algorithm $A$
 \subsection{Show that Madragon is $NP$-complete}
 \label{sub:Show that Madragon is $NP$-complete}
 
+\begin{enumerate}
+    \item
+    In order to show that Madragon is $NP$-complete we must first show that the problem is in $NP$. Since we have shown this in section~\ref{sub:Show that Madragon is in NP} we can now choose a
+    known $NP$-complete problem for the rest of our proof.
+
+    \item
+    For our proof we have chosen the $NP$-complete problem $P_c$ to be  \textit{LongestCommonSubsequence} or $LCS$. We will now show that $P_c \leq P$ where $P$ is the Madragon problem.
+    We create the transformation $T$ for every instance of $X$ in $LCS$ into an instance of $P$ as follows.
+
+    \item
+    \begin{enumerate}
+        \item[3a]
+        In $LCS$ we have a set of words $W = \{w_1, w_2, \dots, w_n\}$ and a constant $B \leq |w_i|$ representing the length of the subsequence.
+        We also have an implicit set $R$ containing all possible permutations of words of length $B$ chosen from alphabet $\Sigma_W = \{\forall x \in w | w \in W\}$ containing the set of letters in the words in $W$.
+
+        We create a Madragon board where the number of columns equal the number of words $n = |W|$ and where the number of number of rows correspond to the size of $S$. We now mark all tiles in a row black if the permutation in $R$ corresponding to the given row index exists in all $w \in W$.
+        As soon as we find one such row, we immediately mark all other rows entirely white.
+        The Madragon board will now have zero or one row colored entirely black and all others entirely white. We choose this board as our starting board $a$. We choose our final board $b$ as a board of equal size to $a$, but with only the top row colored entirely black. We choose our $k = n\times\frac{|R|}{2}$.
+
+        The time complexity of the transformation $T$ is bounded in the size of $B$ and $\Sigma_W$. This is due to the fact that $R$ must be of size $|R| = |\Sigma_W|^B$. Combining the size of $R$ with the fact that we can create the starting board $a$ in $O(n \times |R|)$, we get a total running time complexity of $O(|R|+n \times |R|) = O(n \times |R|) = O(|\Sigma_W|^B)$. As such the transformation $T$ is polynomially-bounded in $B$.
+
+        \item[3b]
+        If the answer to $LCS(X, B)$ is YES then the starting board $a$ will contain exactly one row with only black tiles. It will take at most $k = n\times\frac{|R|}{2}$ moves to transform board $a$ into the final board $b$, since it takes $n$ steps to move any row one row up or down and there are $|R|$ total rows. Thus if the answer to $LCS(X, B)$ is YES, then the Madragon answer to $T(X)$ is also YES.
+
+        \item[3c]
+        Our final board $b$ in $T(X)$ looks the same no matter the given $LCS$ problem - it always contain the entire top row colored black with no other black tiles on the board. A starting board $a$ will never contain any black tiles if the answer to $LCS(X, B)$ is NO. Thus it is impossible for Madragon to answer YES to $T(X)$ if the answer to $LCS(X, B)$ is NO.
+
+    \end{enumerate}
+
+\end{enumerate}
+
 \subsection{Describe the solution for the optimization version of the algorithm}
 \label{sub:Describe the solution for the optimization version of the algorithm}
 
@@ -211,7 +242,7 @@ We run this process iteratively starting with $k = 1$ going up to $k = max_k$ wh
 \subsection{Prove the worst-case running time of your algorithm}
 \label{sub:Prove the worst-case running time of your algorithm}
 
-In the worst case, $A_o$ runs through all of the generated sets in $R$. Given that $R$ contains all possible permutations of $k$-length sets we have $|R| = |S|^k = ((m+n)\frac{(m-1)+(n-1)}{2})^k$ since $|S| = ((m+n)\frac{(m-1)+(n-1)}{2})^k$. We can check each of these sets in $O(k)$ time since each set is of length $k$ and each move can be performed in $O(1)$ constant time.
+In the worst case, $A_o$ runs through all of the generated sets in $R$. Given that $R$ contains all possible permutations of $k$-length sets we have $|R| = |S|^k = ((m+n)\frac{(m-1)+(n-1)}{2})^k$ since $|S| = (m+n)\frac{(m-1)+(n-1)}{2}$. We can check each of these sets in $O(k)$ time since each set is of length $k$ and each move can be performed in $O(1)$ constant time.
 
 This gives $A_o$ a worst-case running time of $T(A_o) = O(|S|^k \times k) = O(|S|^k)$.
 
@@ -238,7 +269,7 @@ If the number is greater than or equal to the number of rows, we rotate the 0-in
 
 $rotations$ correspond to the number of times we rotate the given row or column. We always rotate from right to left or bottom to top.
 
-For the file $arecibo-1.mad$ the result would be:
+For the file \textbf{arecibo-1.mad} the result would be:
 
 \begin{lstlisting}
 [1, [[8, 1]]]
