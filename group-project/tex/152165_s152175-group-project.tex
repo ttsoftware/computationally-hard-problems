@@ -173,29 +173,78 @@ We move row 3 two tiles to the left.
 And now we have made $k = 3$ operations and achieved the goal.
 
 \subsection{Show that Madragon is in $NP$}
-\label{sub:Show that Madragon is in $NP$}
+\label{sub:Show that Madragon is in NP}
 
 We specify the following randomized deterministic polynomial-bound algorithm $A$, which takes as input a problem instance $X$ containing board states $a$ and $b$ and a random sequence of integers $R$.
 
 \begin{enumerate}
     \item
         \begin{enumerate}
-            \item[1a] $R$ is a random sequence of $k$ integers chosen from an even distribution of numbers ranging from 1 to $(m+n)^2$.
-            \item[1b] Every index in $R$ corresponds a step. The value of each index corresponds to a move of either a column or a row. Since there exists $(m+n)^2$ unique moves, the value of $R_i$ will determine which of these moves the algorithm performs at the $i$th step.
+            \item[1a] $R$ is a random sequence of $k$ integers chosen from an even distribution of numbers ranging from 1 to $(m+n)\frac{(m-1)+(n-1)}{2}$.
+            \item[1b] Every index in $R$ corresponds a step. The value of each index corresponds to a move of either a column or a row. Since there exists $(m+n)\frac{(m-1)+(n-1)}{2}$ unique moves, the value of $R_i$ will determine which of these moves the algorithm performs at the $i$th step.
             \item[1c] After $A$ has performed all $i$ steps in $R$, $A$ checks if the board has reached its goal state $b$ and answers YES or NO accordingly.
         \end{enumerate}
     \item
         \begin{enumerate}
-            \item[2a] Since we choose $R$ from an evenly distributed set of all possible combinations of size $\{1, \cdots, (m+n)^2\}^k = (m+n)^{2k}$, we know that if at least one $R$ exists which solves $A(X, R) = YES$, we can choose this $R$ with a probability of $\frac{1}{(m+n)^{2k}} > 0$.
+            \item[2a] Since we choose $R$ from an evenly distributed set of all possible combinations of size $\{1, \cdots, (m+n)\frac{(m-1)+(n-1)}{2}\}^k = ((m+n)\frac{(m-1)+(n-1)}{2})^k$, we know that if at least one $R$ exists which solves $A(X, R) = YES$, we can choose this $R$ with a probability of $\frac{1}{((m+n)\frac{(m-1)+(n-1)}{2})^k} > 0$.
             \item[2b] If there does not exist an $R$ which solves $A(X, R) = YES$, then the algorithm $A$ will never answer YES since the board cannot arrive at goal board $b$ within $k$ steps given any $R$.
         \end{enumerate}
     \item
-        In order to interpret $R$ the algorithm $A$ must generate all possible moves for the given board. This can be done in $O((m+n)^2)$ time. We can perform all steps in $R$ in $O(k)$ time, and check the solution in $O(1)$ time.
-        Thus the algorithm is bound by $O((m+n)^2)$.
+        In order to interpret $R$ the algorithm $A$ must generate all possible moves for the given board. This can be done in $O(((m+n)\frac{(m-1)+(n-1)}{2})^k)$ time. We can perform all steps in $R$ in $O(k)$ time, and check the solution in $O(1)$ time.
+        Thus the algorithm is bound by $O(((m+n)\frac{(m-1)+(n-1)}{2})^k)$.
 \end{enumerate}
 
 \subsection{Show that Madragon is $NP$-complete}
 \label{sub:Show that Madragon is $NP$-complete}
+
+\begin{enumerate}
+    \item
+    In order to show that Madragon is $NP$-complete we must first show that the problem is in $NP$. Since we have shown this in section~\ref{sub:Show that Madragon is in NP} we can now choose a
+    known $NP$-complete problem for the rest of our proof.
+
+    \item
+    For our proof we have chosen the $NP$-complete problem $P_c$ to be  \textit{LongestCommonSubsequence} or $LCS$. We will now show that $P_c \leq_p P$ where $P$ is the Madragon problem.
+    We create the transformation $T$ for every instance of $X$ in $LCS$ into an instance of $P$ as follows.
+
+    \item
+    \begin{enumerate}
+        \item[3a]
+        In $LCS$ we have a set of words $W = \{w_1, w_2, \dots, w_n\}$ and a constant $B \leq |w_i|$ representing the length of the subsequence.
+        We also have an implicit set $R$ containing all possible permutations of words of length $B$ chosen from alphabet $\Sigma_W = \{\forall x \in w | w \in W\}$ containing the set of letters in the words in $W$.
+
+        We create a Madragon board where the number of columns equal the number of words $n = |W|$ and where the number of number of rows correspond to the size of $S$. We now mark all tiles in a row black if the permutation in $R$ corresponding to the given row index exists in all $w \in W$. As soon as we find one such row, we immediately mark all other rows entirely white. The Madragon board will now have zero or one row colored entirely black and all others entirely white. We choose this board as our starting board $a$.
+
+        \begin{figure}[H]
+            \begin{center}
+                \begin{tabular}{|c|cccc|}
+                    \hline
+                    $(\{x_1, \cdots, x_k\} \in W)$ & $w_1$ & $w_2$ & \cdots & $w_n$ \\
+                    \hline
+                    $\{x_1, \cdots, x_k\}$ & 0 & 0 & \cdots & 0 \\
+                    $\{y_1, \cdots, y_k\}$ & 1 & 1 & \cdots & 1 \\
+                    $\{z_1, \cdots, z_k\}$ & 0 & 0 & \cdots & 0 \\
+                    \vdots & \enspace & \enspace & \vdots & \enspace \\
+                    $\{\delta_1, \cdots, \delta_k\}$ & 0 & 0 & \cdots & 0 \\
+                    \hline
+                \end{tabular}
+            \end{center}
+            \caption{The board is represented here as 0s and 1s, where each 0 in
+            the table corresponds to a white tile, and each 1 corresponds to a black tile.}
+        \end{figure}
+
+        We choose our final board $b$ as a board of equal size to $a$, but with only the top row colored entirely black. We choose our $k = n\times\frac{|R|}{2}$.
+
+        The time complexity of the transformation $T$ is bounded in the size of $B$ and $\Sigma_W$. This is due to the fact that $R$ must be of size $|R| = |\Sigma_W|^B$. Combining the size of $R$ with the fact that we can create the starting board $a$ in $O(n \times |R|)$, we get a total running time complexity of $O(|R|+n \times |R|) = O(n \times |R|) = O(|\Sigma_W|^B)$. As such the transformation $T$ is polynomially-bounded in $B$.
+
+        \item[3b]
+        If the answer to $LCS(X, B)$ is YES then the starting board $a$ will contain exactly one row with only black tiles. It will take at most $k = n\times\frac{|R|}{2}$ moves to transform board $a$ into the final board $b$, since it takes $n$ steps to move any row one row up or down and there are $|R|$ total rows. Thus if the answer to $LCS(X, B)$ is YES, then the Madragon answer to $T(X)$ is also YES.
+
+        \item[3c]
+        Our final board $b$ in $T(X)$ looks the same no matter the given $LCS$ problem - it always contain the entire top row colored black with no other black tiles on the board. A starting board $a$ will never contain any black tiles if the answer to $LCS(X, B)$ is NO. Thus it is impossible for Madragon to answer YES to $T(X)$ if the answer to $LCS(X, B)$ is NO.
+
+    \end{enumerate}
+
+\end{enumerate}
 
 \subsection{Describe the solution for the optimization version of the algorithm}
 \label{sub:Describe the solution for the optimization version of the algorithm}
@@ -238,7 +287,7 @@ If the number is greater than or equal to the number of rows, we rotate the 0-in
 
 $rotations$ correspond to the number of times we rotate the given row or column. We always rotate from right to left or bottom to top.
 
-For the file $arecibo-1.mad$ the result would be:
+For the file \textbf{arecibo-1.mad} the result would be:
 
 \begin{lstlisting}
 [1, [[8, 1]]]
