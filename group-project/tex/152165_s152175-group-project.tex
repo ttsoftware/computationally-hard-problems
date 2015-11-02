@@ -218,13 +218,13 @@ We specify the following randomized deterministic polynomial-bound algorithm $A$
             \begin{center}
                 \begin{tabular}{|c|cccc|}
                     \hline
-                    $(\{x_1, \cdots, x_k\} \in W)$ & $w_1$ & $w_2$ & \cdots & $w_n$ \\
+                    $x_{i,j} \in \Sigma_W$ & $w_1$ & $w_2$ & \cdots & $w_n$ \\
                     \hline
-                    $\{x_1, \cdots, x_k\}$ & 0 & 0 & \cdots & 0 \\
-                    $\{y_1, \cdots, y_k\}$ & 1 & 1 & \cdots & 1 \\
-                    $\{z_1, \cdots, z_k\}$ & 0 & 0 & \cdots & 0 \\
+                    $\{x_{0,1}, \cdots, x_{0,k}\}$ & 0 & 0 & \cdots & 0 \\
                     \vdots & \enspace & \enspace & \vdots & \enspace \\
-                    $\{\delta_1, \cdots, \delta_k\}$ & 0 & 0 & \cdots & 0 \\
+                    $\{x_{1,1}, \cdots, x_{1,k}\}$ & 1 & 1 & \cdots & 1 \\
+                    \vdots & \enspace & \enspace & \vdots & \enspace \\
+                    $\{x_{|R|,1}, \cdots, x_{|R|,k}\}$ & 0 & 0 & \cdots & 0 \\
                     \hline
                 \end{tabular}
             \end{center}
