@@ -1,0 +1,115 @@
+\documentclass[12pt]{article}
+\usepackage[a4paper, hmargin={2.5cm, 2.5cm}, vmargin={2.5cm, 2.5cm}]{geometry}
+
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{setspace}
+\usepackage{algorithm}
+\usepackage[noend]{algpseudocode}
+
+\usepackage{tikz}
+\usetikzlibrary{positioning,shapes, shadows, arrows, automata}
+
+\usepackage{xcolor}
+\usepackage{listings}
+\usepackage{graphicx}
+\usepackage[hidelinks]{hyperref}
+\usepackage{float}
+\usepackage[english]{varioref}
+\usepackage{multirow}
+\usepackage{hhline}
+\usepackage{etoolbox}
+
+\usepackage{fancyhdr}
+
+\setlength\parindent{0pt}
+\usepackage[parfill]{parskip}
+
+\definecolor{mygray}{rgb}{0.9451,0.9451,0.9451}
+\lstset{
+  backgroundcolor=\color{mygray},
+  basicstyle=\footnotesize\ttfamily,
+  mathescape,
+  breaklines=true,
+  numbers=left,
+  numberstyle=\ttfamily,
+  stepnumber=1,
+  firstnumber=1,
+  numberfirstline=true,
+  postbreak=\raisebox{0ex}[0ex][0ex]{\ensuremath{\color{red}\hookrightarrow\space}},
+  literate={->}{$\rightarrow$}{2}
+           {ε}{$\varepsilon$}{1}
+}
+
+\linespread{1.3}
+
+\title{
+  \vspace{4cm}
+  \begin{flushleft}
+  \Large{\textbf{Mandatory Excercise 6}} \\
+  \large{Computationally hard problems}
+  \end{flushleft}
+  \vspace{0cm}
+  \begin{flushleft}
+  \small
+  \textit{\today}
+  \end{flushleft}
+  \vspace{12cm}
+  \begin{flushleft}
+  \small
+  Troels Thomsen \texttt{152165} \\
+  Solution discussed with Rasmus Haarslev \texttt{152175}
+  \end{flushleft}
+}
+
+\date{
+	%
+}
+
+\begin{document}
+
+\clearpage
+\pagenumbering{gobble}
+\thispagestyle{empty}
+\maketitle
+
+\newpage
+
+\pagenumbering{arabic}
+
+\section{Excercise 6.5}
+
+\subsubsection{a}
+\label{subs:a}
+
+The general form of the probability for $T = 1$ can be described as follows.
+
+\begin{equation}
+    p = 1 - \Big(\frac{2^n-1}{2^n}\Big)^S
+\end{equation}
+
+In order to find the $S$ where $p \geq \frac{1}{2}$ we simply solve for
+\begin{eqnarray}
+    \frac{1}{2} & \leq & 1 - \Big(\frac{2^3-1}{2^3}\Big)^S \\
+    \frac{1}{2} & \leq & 1 - \Big(\frac{7}{8}\Big)^S \\
+    S & \geq & \frac{ln(2)}{3 ln(2) - log(7)} \\
+    S & \geq & {\raise.17ex\hbox{$\scriptstyle\mathtt{\sim}$}} 5.19
+\end{eqnarray}
+
+Which tells us that we need at least 6 iterations of the $S$-loop for a probability of at least $\frac{1}{2}$ of all clauses being satisfied.
+
+\subsubsection{b}
+\label{subs:b}
+
+Starting from $\{x_1 = 0, x_2 = 0, x_3 = 0\}$, we have to reach the satisfying solution $\{x_1 = 1, x_2 = 1, x_3 = 1\}$ having all of the x’s inversed.
+
+To determine a transformation $T$ for reaching the solution with a probability of at least 12, we look at all possible outcomes of the algorithm in each iteration. So, for $T = 1$ we start in ’000’ and end with three possible outcomes: ’100’, ’010’, and ’001’.
+
+If we have $T = 2$, these three outcomes would each grow to three new outcomes and so on. As soon as we reach a solution, we say that it continues growing with $T$ to three new outcomes (by a factor of 3), that are the same solution.
+
+Since we have three x’s the algorithm will find the first solutions at $T = 3$. By choosing $T = 7$, more than half of all outcomes will be a satisfying solution, which means the algorithm will find a satisfying solution with a probability of at least $\frac{1}{2}$
+
+\end{document}
