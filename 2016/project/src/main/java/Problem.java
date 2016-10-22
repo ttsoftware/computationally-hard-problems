@@ -3,9 +3,9 @@ import java.util.List;
 
 public class Problem {
 
-    String s;
-    List<String> t;
-    HashMap<String, List<String>> R;
+    private String s;
+    private List<String> t;
+    private HashMap<String, List<String>> R;
 
     public Problem() {
     }
