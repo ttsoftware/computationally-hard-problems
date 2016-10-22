@@ -1,14 +1,11 @@
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
+import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Decoder {
 
     public Problem decode(List<String> contents){
-        HashSet<Character> gammaLetters = new HashSet<Character>();
-        Problem problem = new Problem();
-
-        //"^(\\w{1}):([\\w+,]+\\w+)$\n"
+        HashSet<Character> gammaLetters = new HashSet<>();
 
         if(contents.size() < 4){
             System.out.println("Not enough lines in file to contain k, s, t and R.");
@@ -25,7 +22,7 @@ public class Decoder {
                 System.exit(1);
             }
 
-            List<String> t = new ArrayList<String>();
+            List<String> t = new ArrayList<>();
 
             for(int i = 2; i < k + 2; i++){
                 String t_i = contents.get(i);
@@ -42,21 +39,43 @@ public class Decoder {
                 }
             }
 
+            HashMap<String, List<String>> map = new HashMap<>();
 
             //validate R values
             for(int i = 2 + k; i < contents.size(); i++){
-                
+                Pattern pattern = Pattern.compile("^([A-Z]{1}):([a-z,]+[a-z]+)$");
+                Matcher matcher = pattern.matcher(s);
 
+                if (matcher.matches()) {
+                    String R = matcher.group(1);
+                    List<String> extensions = Arrays.asList(matcher.group(2).split(","));
+
+                    if(gammaLetters.contains(R.charAt(0))){
+                       gammaLetters.remove(R.charAt(0));
+                    }
+
+                map.put(R, new ArrayList<>(extensions));
+
+                } else {
+                    System.out.println("Did not found a matching pattern for r.");
+                    System.exit(0);
+                }
             }
 
+            if(!gammaLetters.isEmpty()){
+                System.out.println("Did not find extension sets for all letters in Gamma.");
+                System.exit(1);
+            }
+
+            return new Problem(s, t, map);
 
         } catch(NumberFormatException e) {
             System.out.println("Wrong format for k.");
-            System.exit(1);
         } catch(IndexOutOfBoundsException e){
             System.out.println("Not enough files.");
-            System.exit(1);
         }
 
+        System.out.println("Lol gg");
+        return null;
     }
 }
