@@ -13,17 +13,8 @@ public class Main {
 
         List<String> lines = readFile(filename);
 
-        lines.forEach(s -> {
-            Pattern pattern = Pattern.compile("^([A-Z]{1}):([a-z,]+[a-z]+)$");
-            Matcher matcher = pattern.matcher(s);
-
-            if (matcher.matches()) {
-                // System.out.println(matcher.group(0));
-                System.out.println(matcher.group(1));
-                System.out.println(matcher.group(2));
-            }
-        });
-
+        Problem problem = new Decoder().decode(lines);
+        System.out.println(problem.getS());
 
     }
 

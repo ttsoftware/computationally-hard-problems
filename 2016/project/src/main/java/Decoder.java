@@ -17,7 +17,8 @@ public class Decoder {
 
             String s = contents.get(1);
 
-            if(s.matches("^[a-z]+$")){
+            if(!s.matches("^[a-z]+$")){
+                System.out.println(s);
                 System.out.println("Not all characters in s are in the alphabet.");
                 System.exit(1);
             }
@@ -27,7 +28,7 @@ public class Decoder {
             for(int i = 2; i < k + 2; i++){
                 String t_i = contents.get(i);
 
-                if(t_i.matches("^[a-zA-Z]+$")){
+                if(!t_i.matches("^[a-zA-Z]+$")){
                     System.out.println("String t_" + i + " is not valid.");
                     System.exit(1);
                 }
@@ -44,7 +45,7 @@ public class Decoder {
             //validate R values
             for(int i = 2 + k; i < contents.size(); i++){
                 Pattern pattern = Pattern.compile("^([A-Z]{1}):([a-z,]+[a-z]+)$");
-                Matcher matcher = pattern.matcher(s);
+                Matcher matcher = pattern.matcher(contents.get(i));
 
                 if (matcher.matches()) {
                     String R = matcher.group(1);
