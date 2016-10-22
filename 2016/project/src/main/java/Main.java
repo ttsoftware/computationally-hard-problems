@@ -6,6 +6,7 @@ public class Main {
         String filename = args[0];
 
         String contents = readFile(filename);
+        Problem problem = new Decoder().decode(contents);
     }
 
     public static String readFile(String filename) {
