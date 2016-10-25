@@ -9,17 +9,11 @@ public class Main {
     public static void main(String[] args) throws IOException {
         String filename = args[0];
 
-        List<String> lines = readFile(filename);
+        List<String> lines = FileReader.readFile(filename);
 
         Problem problem = new Decoder().decode(lines);
 
         Solver solver = new Solver(problem);
         solver.solve();
-    }
-
-    private static List<String> readFile(String filename) throws IOException {
-        return (List<String>) Files.lines(
-                FileSystems.getDefault().getPath(filename)
-        ).collect(Collectors.toList());
     }
 }

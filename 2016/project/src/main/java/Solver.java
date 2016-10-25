@@ -63,15 +63,13 @@ public class Solver {
         // A, D, B, E
         // Try the word with most occurences first. Eliminate impossible letters in R.
 
-        List<Map.Entry<String, Integer>> sortedT = tMaxWordOccurence.entrySet().stream().collect(Collectors.toList());
+        List<Map.Entry<String, Integer>> sortedT = tTotalOccurence.entrySet().stream().collect(Collectors.toList());
         Collections.sort(sortedT, (t1, t2) -> (t2.getValue()).compareTo(t1.getValue()));
 
 
-        // TODO: Implement this recursively dumbass
-        boolean res = sortedT.stream().anyMatch(tEntry -> {
-            //Extract current entry from set and
-            return recursiveSearch(tEntry, sortedT, problem);
-        });
+
+        //No need to loop over all - one assignment to the first should yield a valid value.
+        boolean res = recursiveSearch(sortedT.get(0), sortedT, problem);
 
         System.out.println("Could solve: " + res);
 
@@ -88,25 +86,28 @@ public class Solver {
     private boolean recursiveSearch(Map.Entry<String, Integer> entry, List<Map.Entry<String, Integer>> remaining, Problem problem){
 
         //Validate if problem is valid
-        if(!problem.isValid()){
-            //It's not - return false
-            return false;
-        }
+//        if(!problem.isValid()){
+//            //It's not - return false
+//            return false;
+//        }
 
         String key = entry.getKey();
         List<String> extensions = problem.getR().get(key);
 
-        //This teminates on first match
-        if(remaining.isEmpty()) {
-            extensions.stream().anyMatch(e -> {
-                result = new Problem(problem, key, e);
-                return result.isValid();
-            });
-        }
-
         //Remove the already processed entry - this one
         List<Map.Entry<String, Integer>> newRemaining = new ArrayList<>(remaining);
         newRemaining.remove(entry);
+
+        //This teminates on first match
+        if(newRemaining.isEmpty()) {
+//            System.out.println("Last R to replace.");
+            return extensions.stream().anyMatch(e -> {
+                result = new Problem(problem, key, e);
+                boolean valid = result.isValid();
+//                System.out.println("Applying " + key + " -> " + e + " is valid: " + valid);
+                return valid;
+            });
+        }
 
         return newRemaining
                 .stream()
@@ -116,8 +117,11 @@ public class Solver {
                         .anyMatch(e ->
                         {
                             Problem newProblem = new Problem(problem, key, e);
-                            if (newProblem.isValid()) {
-                                return recursiveSearch(ent, remaining, newProblem);
+                            boolean isValid = newProblem.isValid();
+//                            System.out.println("Trying out " + key + " -> " + e + " : " + isValid);
+                            if (isValid) {
+//                                System.out.println("Applying " + key + " -> " + e + " is valid. Continue search with " + ent.getKey());
+                                return recursiveSearch(ent, newRemaining, newProblem);
                             }
                             return false;
         }));
