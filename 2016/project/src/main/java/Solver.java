@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 public class Solver {
 
     private Problem problem;
+    private Problem result;
 
     public Solver(Problem problem) {
         this.problem = problem;
@@ -20,6 +21,7 @@ public class Solver {
 
     private Problem preprocess(Problem problem) {
 
+        // TODO: Very important to note, R are not necessarily chars but entire strings
         // TODO: 1. Remove all chars in R which do not appear in s.
 
         HashMap<String, List<String>> newR = new HashMap<>();
@@ -64,17 +66,60 @@ public class Solver {
         List<Map.Entry<String, Integer>> sortedT = tMaxWordOccurence.entrySet().stream().collect(Collectors.toList());
         Collections.sort(sortedT, (t1, t2) -> (t2.getValue()).compareTo(t1.getValue()));
 
+
         // TODO: Implement this recursively dumbass
-        sortedT.forEach(tEntry -> {
-            String t = tEntry.getKey();
-
-            List<String> choices = problem.getR().get(t);
-
-            choices.forEach(r -> {
-
-            });
+        boolean res = sortedT.stream().anyMatch(tEntry -> {
+            //Extract current entry from set and
+            return recursiveSearch(tEntry, sortedT, problem);
         });
 
-        return problem;
+        System.out.println("Could solve: " + res);
+
+        if(res){
+            result.getResult()
+                    .forEach((key, val) -> System.out.println("R: " + key + ", ext: " + val));
+
+        }
+
+        return result;
+    }
+
+
+    private boolean recursiveSearch(Map.Entry<String, Integer> entry, List<Map.Entry<String, Integer>> remaining, Problem problem){
+
+        //Validate if problem is valid
+        if(!problem.isValid()){
+            //It's not - return false
+            return false;
+        }
+
+        String key = entry.getKey();
+        List<String> extensions = problem.getR().get(key);
+
+        //This teminates on first match
+        if(remaining.isEmpty()) {
+            extensions.stream().anyMatch(e -> {
+                result = new Problem(problem, key, e);
+                return result.isValid();
+            });
+        }
+
+        //Remove the already processed entry - this one
+        List<Map.Entry<String, Integer>> newRemaining = new ArrayList<>(remaining);
+        newRemaining.remove(entry);
+
+        return newRemaining
+                .stream()
+                .anyMatch(ent ->
+                        extensions
+                        .stream()
+                        .anyMatch(e ->
+                        {
+                            Problem newProblem = new Problem(problem, key, e);
+                            if (newProblem.isValid()) {
+                                return recursiveSearch(ent, remaining, newProblem);
+                            }
+                            return false;
+        }));
     }
 }
