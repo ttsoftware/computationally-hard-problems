@@ -9,15 +9,12 @@ public class Preprocessor {
     public Problem preprocess(Problem problem){
         String s = problem.getS();
 
-
-
         //Prune R for invalid extensions
         HashMap<String, List<String>> R = pruneR(problem);
 
         //Prune T for subsets of other sets
         List<String> T = pruneT(problem);
 
-        //preprocessed.setR(pruneRForFirstInsertInvalidExtensions(preprocessed));
         //True for init pruning
         Problem preprocessed = new Problem(s, T, R);
 
@@ -38,8 +35,8 @@ public class Preprocessor {
                     }
                 });
 
-        System.out.println("Allowed Rs in problem:");
-        RSet.forEach(r -> System.out.println(r));
+        Printer.preprocessor("Allowed Rs in problem:");
+        RSet.forEach(r -> Printer.preprocessor(r + ""));
 
         HashMap<String, List<String>> newR = new HashMap<>();
 
@@ -47,7 +44,7 @@ public class Preprocessor {
 
             //Prunes not needed R values
             if(!RSet.contains(R.getKey().charAt(0))) {
-                System.out.println("Pruned R: " + R.getKey());
+                Printer.preprocessor("Pruned R: " + R.getKey());
                 continue;
             }
             List<String> newRValues = R.getValue().stream().filter(r -> {
@@ -57,7 +54,9 @@ public class Preprocessor {
             newR.put(R.getKey(), newRValues);
         }
 
+        Printer.preprocessor("");
         return newR;
+
     }
 
     private List<String> pruneT(Problem problem){
@@ -75,16 +74,12 @@ public class Preprocessor {
                 prunedT.add(sorted);
             } else {
                 //prints the pruned T
-                System.out.println("Pruned T: " + sorted);
+                Printer.preprocessor("Pruned T: " + sorted);
             }
         });
 
-        //Prints the new T
-//        prunedT.forEach(t -> System.out.println(t));
-
+        Printer.preprocessor("");
         return list;
     }
-
-    //Prunes all extensions that are invalid even if inserted all by it self
 
 }

@@ -8,7 +8,7 @@ public class Decoder {
         HashSet<Character> gammaLetters = new HashSet<>();
 
         if(contents.size() < 4){
-            System.out.println("Not enough lines in file to contain k, s, t and R.");
+            Printer.result("Not enough lines in file to contain k, s, t and R.");
             System.exit(1);
         }
 
@@ -18,8 +18,7 @@ public class Decoder {
             String s = contents.get(1);
 
             if(!s.matches("^[a-z]+$")){
-                System.out.println(s);
-                System.out.println("Not all characters in s are in the alphabet.");
+                Printer.result("Not all characters in s (" + s + ") are in the alphabet.");
                 System.exit(1);
             }
 
@@ -29,7 +28,7 @@ public class Decoder {
                 String t_i = contents.get(i);
 
                 if(!t_i.matches("^[a-zA-Z]+$")){
-                    System.out.println("String t_" + i + " is not valid.");
+                    Printer.result("String t_" + i + " is not valid.");
                     System.exit(1);
                 }
 
@@ -58,25 +57,25 @@ public class Decoder {
                 map.put(R, new ArrayList<>(extensions));
 
                 } else {
-                    System.out.println("Did not found a matching pattern for r.");
+                    Printer.result("Did not found a matching pattern for r.");
                     System.exit(0);
                 }
             }
 
             if(!gammaLetters.isEmpty()){
-                System.out.println("Did not find extension sets for all letters in Gamma.");
+                Printer.result("Did not find extension sets for all letters in Gamma.");
                 System.exit(1);
             }
 
             return new Problem(s, t, map);
 
         } catch(NumberFormatException e) {
-            System.out.println("Wrong format for k.");
+            Printer.result("Wrong format for k.");
         } catch(IndexOutOfBoundsException e){
-            System.out.println("Not enough files.");
+            Printer.result("Not enough files.");
         }
 
-        System.out.println("Lol gg");
+        //Should never be reached.
         return null;
     }
 }

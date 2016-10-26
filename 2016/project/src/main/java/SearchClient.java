@@ -19,29 +19,29 @@ public class SearchClient {
         int iterations = 0;
         while (true) {
             if (iterations % 10 == 0) {
-                System.out.println(strategy.searchStatus());
+                Printer.info(strategy.searchStatus());
             }
             if (Memory.shouldEnd()) {
-                System.out.println(String.format("Memory limit almost reached, terminating search %s\n", Memory.stringRep()));
+                Printer.info(String.format("Memory limit almost reached, terminating search %s\n", Memory.stringRep()));
                 return null;
             }
             if (strategy.timeSpent() > 300) { // Minutes timeout
-                System.out.println(String.format("Time limit reached, terminating search %s\n", Memory.stringRep()));
+                Printer.info(String.format("Time limit reached, terminating search %s\n", Memory.stringRep()));
                 return null;
             }
 
             if (strategy.frontierIsEmpty()) {
-                System.out.println("Frontier is empty. Returns null.");
-                System.out.println(strategy.searchStatus());
+                Printer.info("Frontier is empty. Returns null.");
+                Printer.info(strategy.searchStatus());
                 return null;
             }
 
             leafNode = strategy.getAndRemoveLeaf();
 
             if (leafNode.isGoalState()) {
-                System.out.println("Summary for " + strategy);
-                System.out.println("Found solution of length " + leafNode.g());
-                System.out.println(strategy.searchStatus());
+                Printer.info("Summary for " + strategy);
+                Printer.info("Found solution of length " + leafNode.g());
+                Printer.info(strategy.searchStatus());
                 return leafNode;
             }
 

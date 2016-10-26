@@ -1,7 +1,9 @@
 import com.google.common.base.Stopwatch;
 import org.junit.Test;
 
+import java.io.File;
 import java.io.IOException;
+import java.nio.file.Paths;
 
 public class MainTest {
 
@@ -9,25 +11,38 @@ public class MainTest {
     public void testMain() throws IOException {
 
         String[] args = {
-//                "src/test/resources/test00.SWE",
-//                "src/test/resources/test01.SWE",
-//                "src/test/resources/test02.SWE",
-//                "src/test/resources/test03.SWE",
-//                "src/test/resources/test04.SWE",
-//                "src/test/resources/test05.SWE",
+                "src/test/resources/test00.SWE",
+                "src/test/resources/test01.SWE",
+                "src/test/resources/test02.SWE",
+                "src/test/resources/test03.SWE",
+                "src/test/resources/test04.SWE",
+                "src/test/resources/test05.SWE",
                 "src/test/resources/test06.SWE",
         };
 
-        for(String arg : args){
-            Stopwatch watch = Stopwatch.createStarted();
+        Printer.preprocessor = false;
+        Printer.info = false;
+        Printer.result = false;
 
-            for(int i = 0 ; i < 1; i++){
-                Main.main(new String[] {arg});
-            }
-            watch.stop();
-            System.out.println(watch.toString());
+        System.out.println("Warming up");
+        for(int i = 0; i < 20; i++){
+            Main.main(new String[]{args[0]});
         }
 
+        Printer.result = true;
+
+        for(String arg : args){
+
+            System.out.println("File: " + Paths.get(arg).getFileName().toString());
+            Stopwatch watch = Stopwatch.createStarted();
+
+            Main.main(new String[]{arg});
+
+            watch.stop();
+
+            System.out.println(watch.toString());
+            System.out.println("");
+        }
 
         //Main.main(args);
     }
