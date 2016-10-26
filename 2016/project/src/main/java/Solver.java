@@ -1,5 +1,3 @@
-import com.google.common.base.CharMatcher;
-
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -14,70 +12,81 @@ public class Solver {
 
     public boolean solve() {
 
-        problem = preprocess(problem);
+        this.problem = new Preprocessor().preprocess(problem);
+
+        SearchClient sc = new SearchClient(problem);
+
+        Node n = sc.Search(new Strategy.StrategyBestFirst(new Heuristic.WeightedAStar()));
+
+        if(n != null){
+            System.out.println(n.toString());
+            return true;
+        }
 
         return false;
     }
 
     private Problem preprocess(Problem problem) {
 
-        // TODO: Very important to note, R are not necessarily chars but entire strings
-        // TODO: 1. Remove all chars in R which do not appear in s.
-
-        HashMap<String, List<String>> newR = new HashMap<>();
-
-        for (Map.Entry<String, List<String>> R : problem.getR().entrySet()) {
-            List<String> newRValues = R.getValue().stream().filter(r -> {
-                return problem.getS().contains(r);
-            }).collect(Collectors.toList());
-
-            newR.put(R.getKey(), newRValues);
-        }
-
-        problem.setR(newR);
+//        // TODO: Very important to note, R are not necessarily chars but entire strings
+//        // TODO: 1. Remove all chars in R which do not appear in s.
+//
+//        HashMap<String, List<String>> newR = new HashMap<>();
+//
+//        for (Map.Entry<String, List<String>> R : problem.getR().entrySet()) {
+//            List<String> newRValues = R.getValue().stream().filter(r -> {
+//                return problem.getS().contains(r);
+//            }).collect(Collectors.toList());
+//
+//            newR.put(R.getKey(), newRValues);
+//        }
+//
+//        problem.setR(newR);
 
         // TODO: Gather statistics on t's
-        HashMap<String, Integer> tMaxWordOccurence = new HashMap<>();
-        HashMap<String, Integer> tTotalOccurence = new HashMap<>();
-
-        problem.getR().keySet().forEach(R -> {
-            problem.getT().forEach(t -> {
-                int tCount = CharMatcher.anyOf(R).countIn(t);
-
-                Integer maxCount = tMaxWordOccurence.get(R);
-                if (maxCount == null || tCount > maxCount) {
-                    tMaxWordOccurence.put(R, tCount);
-                }
-
-                Integer totalCount = tTotalOccurence.get(R);
-                if (totalCount != null) {
-                    tTotalOccurence.put(R, tCount + totalCount);
-                }
-                else {
-                    tTotalOccurence.put(R, tCount);
-                }
-            });
-        });
+        // TODO: Not sure if we need this anymore, it is somewhat included in the heuristic now implicit.
+//        HashMap<String, Integer> tMaxWordOccurence = new HashMap<>();
+//        HashMap<String, Integer> tTotalOccurence = new HashMap<>();
+//
+//        problem.getR().keySet().forEach(R -> {
+//            problem.getT().forEach(t -> {
+//                int tCount = CharMatcher.anyOf(R).countIn(t);
+//
+//                Integer maxCount = tMaxWordOccurence.get(R);
+//                if (maxCount == null || tCount > maxCount) {
+//                    tMaxWordOccurence.put(R, tCount);
+//                }
+//
+//                Integer totalCount = tTotalOccurence.get(R);
+//                if (totalCount != null) {
+//                    tTotalOccurence.put(R, tCount + totalCount);
+//                }
+//                else {
+//                    tTotalOccurence.put(R, tCount);
+//                }
+//            });
+//        });
 
         // TODO: 4. Sort by number of times a letter in t appears in a word t:
+        // TODO: Included in heuristic somewhat.
         // A, D, B, E
         // Try the word with most occurences first. Eliminate impossible letters in R.
 
-        List<Map.Entry<String, Integer>> sortedT = tTotalOccurence.entrySet().stream().collect(Collectors.toList());
-        Collections.sort(sortedT, (t1, t2) -> (t2.getValue()).compareTo(t1.getValue()));
+//        List<Map.Entry<String, Integer>> sortedT = tTotalOccurence.entrySet().stream().collect(Collectors.toList());
+//        Collections.sort(sortedT, (t1, t2) -> (t2.getValue()).compareTo(t1.getValue()));
 
 
 
         //No need to loop over all - one assignment to the first should yield a valid value.
-        boolean res = recursiveSearch(sortedT.get(0), sortedT, problem);
-
-        System.out.println("Could solve: " + res);
-
-        if(res){
-            result.getResult()
-                    .forEach((key, val) -> System.out.println("R: " + key + ", ext: " + val));
-
-        }
+//        boolean res = recursiveSearch(sortedT.get(0), sortedT, problem);
+//
+//        System.out.println("Could solve: " + res);
+//
+//        if(res){
+//            result.getResult()
+//                    .forEach((key, val) -> System.out.println("R: " + key + ", ext: " + val));
+//
+//        }
 
         return result;
     }

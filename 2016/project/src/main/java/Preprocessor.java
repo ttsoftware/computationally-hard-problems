@@ -19,16 +19,37 @@ public class Preprocessor {
 
         //preprocessed.setR(pruneRForFirstInsertInvalidExtensions(preprocessed));
         //True for init pruning
-        Problem preprocessed = new Problem(s, T, R, true);
-
+        Problem preprocessed = new Problem(s, T, R);
 
         return preprocessed;
     }
 
     private HashMap<String, List<String>> pruneR(Problem problem){
+
+        HashSet<Character> RSet = new HashSet<>();
+
+        problem.getT()
+                .forEach(t -> {
+                    char[] temp = t.toCharArray();
+                    for(int i = 0; i < temp.length; i++){
+                        if(Character.isUpperCase(temp[i])){
+                            RSet.add(temp[i]);
+                        }
+                    }
+                });
+
+        System.out.println("Allowed Rs in problem:");
+        RSet.forEach(r -> System.out.println(r));
+
         HashMap<String, List<String>> newR = new HashMap<>();
 
         for (Map.Entry<String, List<String>> R : problem.getR().entrySet()) {
+
+            //Prunes not needed R values
+            if(!RSet.contains(R.getKey().charAt(0))) {
+                System.out.println("Pruned R: " + R.getKey());
+                continue;
+            }
             List<String> newRValues = R.getValue().stream().filter(r -> {
                 return problem.getS().contains(r);
             }).collect(Collectors.toList());
@@ -54,7 +75,7 @@ public class Preprocessor {
                 prunedT.add(sorted);
             } else {
                 //prints the pruned T
-                System.out.println("Pruned: " + sorted);
+                System.out.println("Pruned T: " + sorted);
             }
         });
 

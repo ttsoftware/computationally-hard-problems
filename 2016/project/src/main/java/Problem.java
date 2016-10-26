@@ -1,7 +1,6 @@
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 import java.util.regex.Pattern;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 public class Problem {
@@ -9,41 +8,43 @@ public class Problem {
     private String s;
     private List<String> t;
     private HashMap<String, List<String>> R;
-    private HashMap<String, String> result;
+    private HashMap<String, List<Problem>> futureProblems;
     private static final String REPLACER = "[\\\\w]+";
     private static final String ADDON = "[\\w]*";
     private final boolean isValid;
+    public final String key;
+    public final String extension;
 
-    public Problem(String s, List<String> t, HashMap<String, List<String>> r){
-        this(s, t, r, false);
-    }
-
-    public Problem(String s, List<String> t, HashMap<String, List<String>> r, boolean prune) {
+    public Problem(String s, List<String> t, HashMap<String, List<String>> r) {
         this.s = s;
         this.t = t;
         R = r;
-        this.result = new HashMap<>();
         this.isValid = true;
-
-        if(prune) {
-            R = pruneRForFirstInsertInvalidExtensions();
-        }
+        this.key = "Initial state";
+        this.extension = "Initial state";
     }
 
     public Problem(Problem prev, String key, String extension){
         //Copy old data structures
         this.s = prev.getS();
         this.R = new HashMap<>(prev.getR());
-        this.result = new HashMap<>(prev.getResult());
+        this.key = key;
+        this.extension = extension;
+
+        List<String> notEditedTs = prev.getT().stream().filter(str -> !str.contains(key)).collect(Collectors.toList());
+        List<String> editedTs = prev.getT().stream()
+                .filter(str -> str.contains(key))
+                .map(tString -> tString.replaceAll(key, extension))
+                .collect(Collectors.toList());
+
+        notEditedTs.addAll(editedTs);
 
         //Replace key in the string with the given extension
-        this.t = prev.getT().stream()
-                        .map(tString -> tString.replaceAll(key, extension)).collect(Collectors.toList());
+        this.t = notEditedTs;
 
         //Store result and remove key from R
-        this.result.put(key, extension);
         this.R.remove(key);
-        this.isValid = this.validate(key);
+        this.isValid = this.validate(editedTs);
     }
 
     public String getS() {
@@ -70,19 +71,14 @@ public class Problem {
         this.R = r;
     }
 
-    public HashMap<String, String> getResult() {
-        return result;
-    }
-
     public boolean isValid(){
         return this.isValid;
     }
 
-    private boolean validate(String key){
+    private boolean validate(List<String> editedTs){
         //replace all uppercase letters and matches against s
 //        List<Tuple> list =
-        return this.t.stream()
-                .filter(ent -> ent.contains(key))
+        boolean allTsAreValid = editedTs.stream()
                 .map(ent -> {
                     String pat = ent.replaceAll("[A-Z]", REPLACER);
                     //Append a star if not a plus
@@ -96,43 +92,72 @@ public class Problem {
                     }
 
                     return Pattern.compile(pat);
-        })
+                })
                 .allMatch(mat -> {
                     boolean match = mat.matcher(s).matches();
-//                    System.out.println("Match for pattern " + mat.pattern() + " : " + match);
+                    //System.out.println("Match for pattern " + mat.pattern() + " : " + match);
                     return match;
                 });
+
+        boolean allRsAreValid = this.R.values()
+                .stream()
+                .allMatch(extensionSet -> !extensionSet.isEmpty());
+
+        return allTsAreValid && allRsAreValid;
         //.map(pat -> new Tuple(pat, pat.matcher(this.s)))
         //.collect(Collectors.toList());
 
 //        list.forEach(tup -> System.out.println("Pattern: " + tup.pat.pattern() + ", match: " + tup.match.matches()));
     }
 
-    private HashMap<String, List<String>> pruneRForFirstInsertInvalidExtensions(){
-        HashMap<String, List<String>> prunedR = new HashMap<>(this.R.size());
+    public void pruneProblem(){
+        this.R = pruneRForInvalidExtensions();
+    }
 
+    private HashMap<String, List<String>> pruneRForInvalidExtensions(){
+        HashMap<String, List<String>> prunedR = new HashMap<>(this.R.size());
+        this.futureProblems = new HashMap<>(this.R.size());
         this.R.entrySet()
                 .forEach(entry -> {
                     //Get R and insert new key in pruned array
                     String R = entry.getKey();
                     prunedR.put(R, new ArrayList<>());
+                    this.futureProblems.put(R, new ArrayList<>(entry.getValue().size()));
 
                     entry.getValue()
                             .forEach(extension -> {
-                                boolean valid = new Problem(this, R, extension)
-                                        .isValid();
+                                Problem temp = new Problem(this, R, extension);
 
-                                if(valid){
+                                if(temp.isValid()){
+                                    //Store future problem - if we decide to continue work on this one, no need to process it again
+                                    this.futureProblems.get(R).add(temp);
                                     prunedR.get(R).add(extension);
                                 }
                             });
                 });
 
-        prunedR.forEach((key, extensionSet) -> {
-            System.out.println(key + ":");
-            extensionSet.forEach(extension -> System.out.println("\t" + extension));
-        });
+//        prunedR.forEach((key, extensionSet) -> {
+//            System.out.println(key + ":");
+//            extensionSet.forEach(extension -> System.out.println("\t" + extension));
+//        });
 
         return prunedR;
+    }
+
+    public List<Problem> getFutureProblems(String key){
+        return this.futureProblems.get(key);
+    }
+
+    public Map.Entry<String, List<String>> getRwithLowestNumberOfExtensions(){
+        Optional<Map.Entry<String, List<String>>> min = this.R.entrySet()
+                .stream()
+                .min((entry1, entry2) -> entry1.getValue().size() - entry2.getValue().size());
+
+        if(min.isPresent()){
+            return min.get();
+        }
+
+        //What to do if no R left?
+        return null;
     }
 }

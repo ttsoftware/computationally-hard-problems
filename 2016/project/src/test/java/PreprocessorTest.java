@@ -12,7 +12,7 @@ public class PreprocessorTest {
     @Test
     public void testPreprocessor() throws IOException {
 
-        String filename = "src/test/resources/test00.SWE";
+        String filename = "src/test/resources/test03.SWE";
 
         List<String> lines = FileReader.readFile(filename);
 
