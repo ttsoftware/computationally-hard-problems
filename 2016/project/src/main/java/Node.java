@@ -62,6 +62,17 @@ public class Node {
         return expandedNodes;
     }
 
+    public HashMap<String, String> getResult(){
+        HashMap<String, String> result = new HashMap<>();
+
+        Node n = this;
+        while( !n.isInitialState() ) {
+            result.put(n.key, n.extension);
+            n = n.parent;
+        }
+        return result;
+    }
+
     public LinkedList< Node > extractPlan() {
         LinkedList< Node > plan = new LinkedList< Node >();
         Node n = this;
@@ -71,30 +82,6 @@ public class Node {
         }
         return plan;
     }
-
-//    @Override
-//    public int hashCode() {
-//        final int prime = 31;
-//        int result = 1;
-//        result = prime * result + agentCol;
-//        result = prime * result + agentRow;
-//        result = prime * result + Arrays.deepHashCode( boxes );
-//        result = prime * result + Arrays.deepHashCode( goals );
-//        result = prime * result + Arrays.deepHashCode( walls );
-//        return result;
-//    }
-//
-//    @Override
-//    public boolean equals( Object obj ) {
-//        if ( this == obj )
-//            return true;
-//        if ( obj == null )
-//            return false;
-//        if ( getClass() != obj.getClass() )
-//            return false;
-//
-//        return true;
-//    }
 
     public String toString() {
         StringBuilder s = new StringBuilder();

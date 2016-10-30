@@ -1,28 +1,21 @@
+import java.util.HashMap;
+
 public class Solver {
 
-    private Problem problem;
+    private final Problem initialProblem;
 
     public Solver(Problem problem) {
-        this.problem = problem;
+        this.initialProblem = problem;
     }
 
-    public boolean solve() {
+    public Node solve() {
 
-        this.problem = new Preprocessor().preprocess(problem);
+        Problem preprocessed = new Preprocessor().preprocess(initialProblem);
 
-        SearchClient sc = new SearchClient(problem);
+        SearchClient sc = new SearchClient(preprocessed);
 
         Node n = sc.Search(new Strategy.StrategyBestFirst(new Heuristic.WeightedAStar()));
 
-        Printer.result("Result found:");
-
-        if(n != null){
-            Printer.result("Solved.");
-            Printer.result(n.toString());
-            return true;
-        } else {
-            Printer.result("Cannot be solved.");
-        }
-        return false;
+        return n;
     }
 }

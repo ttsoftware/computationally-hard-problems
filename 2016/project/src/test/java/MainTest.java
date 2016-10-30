@@ -11,9 +11,9 @@ public class MainTest {
     public void testMain() throws IOException {
 
         String[] args = {
-                "src/test/resources/test00.SWE",
-                "src/test/resources/test01.SWE",
-                "src/test/resources/test02.SWE",
+//                "src/test/resources/test00.SWE",
+//                "src/test/resources/test01.SWE",
+//                "src/test/resources/test02.SWE",
                 "src/test/resources/test03.SWE",
                 "src/test/resources/test04.SWE",
                 "src/test/resources/test05.SWE",
@@ -22,12 +22,12 @@ public class MainTest {
 
         Printer.preprocessor = false;
         Printer.info = false;
-        Printer.result = false;
+        Printer.result = true;
 
-        System.out.println("Warming up");
-        for(int i = 0; i < 20; i++){
-            Main.main(new String[]{args[0]});
-        }
+//        System.out.println("Warming up");
+//        for(int i = 0; i < 1; i++){
+//            Main.main(new String[]{args[0]});
+//        }
 
         Printer.result = true;
 
