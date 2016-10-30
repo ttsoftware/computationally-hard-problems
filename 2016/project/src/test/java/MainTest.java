@@ -1,7 +1,6 @@
 import com.google.common.base.Stopwatch;
 import org.junit.Test;
 
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Paths;
 
@@ -11,9 +10,9 @@ public class MainTest {
     public void testMain() throws IOException {
 
         String[] args = {
-//                "src/test/resources/test00.SWE",
-//                "src/test/resources/test01.SWE",
-//                "src/test/resources/test02.SWE",
+                "src/test/resources/test00.SWE",
+                "src/test/resources/test01.SWE",
+                "src/test/resources/test02.SWE",
                 "src/test/resources/test03.SWE",
                 "src/test/resources/test04.SWE",
                 "src/test/resources/test05.SWE",

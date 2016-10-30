@@ -1,5 +1,3 @@
-import java.util.HashMap;
-
 public class Solver {
 
     private final Problem initialProblem;
@@ -14,7 +12,8 @@ public class Solver {
 
         SearchClient sc = new SearchClient(preprocessed);
 
-        Node n = sc.Search(new Strategy.StrategyBestFirst(new Heuristic.WeightedAStar()));
+        // Node n = sc.Search(new Strategy.StrategyBestFirst(new Heuristic.WeightedAStar()));
+        Node n = sc.Search(new Strategy.StrategyDFS());
 
         return n;
     }
