@@ -8,15 +8,15 @@ public abstract class Strategy {
     public long startTime = System.currentTimeMillis();
 
     public Strategy() {
-        explored = new HashSet< Node >();
+        explored = new HashSet<Node>();
     }
 
-    public void addToExplored( Node n ) {
-        explored.add( n );
+    public void addToExplored(Node n) {
+        explored.add(n);
     }
 
-    public boolean isExplored( Node n ) {
-        return explored.contains( n );
+    public boolean isExplored(Node n) {
+        return explored.contains(n);
     }
 
     public int countExplored() {
@@ -24,18 +24,18 @@ public abstract class Strategy {
     }
 
     public String searchStatus() {
-        return String.format( "#Explored: %4d, #Frontier: %3d, Time: %3.2f s \t%s", countExplored(), countFrontier(), timeSpent(), Memory.stringRep() );
+        return String.format("#Explored: %4d, #Frontier: %3d, Time: %3.2f s \t%s", countExplored(), countFrontier(), timeSpent(), Memory.stringRep());
     }
 
     public float timeSpent() {
-        return ( System.currentTimeMillis() - startTime ) / 1000f;
+        return (System.currentTimeMillis() - startTime) / 1000f;
     }
 
     public abstract Node getAndRemoveLeaf();
 
-    public abstract void addToFrontier( Node n );
+    public abstract void addToFrontier(Node n);
 
-    public abstract boolean inFrontier( Node n );
+    public abstract boolean inFrontier(Node n);
 
     public abstract int countFrontier();
 
@@ -45,19 +45,19 @@ public abstract class Strategy {
 
     public static class StrategyBFS extends Strategy {
 
-        private ArrayDeque< Node > frontier;
+        private ArrayDeque<Node> frontier;
 
         public StrategyBFS() {
             super();
-            frontier = new ArrayDeque< Node >();
+            frontier = new ArrayDeque<Node>();
         }
 
         public Node getAndRemoveLeaf() {
             return frontier.pollFirst();
         }
 
-        public void addToFrontier( Node n ) {
-            frontier.addLast( n );
+        public void addToFrontier(Node n) {
+            frontier.addLast(n);
         }
 
         public int countFrontier() {
@@ -68,8 +68,8 @@ public abstract class Strategy {
             return frontier.isEmpty();
         }
 
-        public boolean inFrontier( Node n ) {
-            return frontier.contains( n );
+        public boolean inFrontier(Node n) {
+            return frontier.contains(n);
         }
 
         public String toString() {
@@ -82,14 +82,14 @@ public abstract class Strategy {
 
         public StrategyDFS() {
             super();
-            frontier = new ArrayDeque< Node >();
+            frontier = new ArrayDeque<Node>();
         }
 
         public Node getAndRemoveLeaf() {
             return frontier.pollLast();
         }
 
-        public void addToFrontier( Node n ) {
+        public void addToFrontier(Node n) {
             frontier.add(n);
         }
 
@@ -101,7 +101,7 @@ public abstract class Strategy {
             return frontier.isEmpty();
         }
 
-        public boolean inFrontier( Node n ) {
+        public boolean inFrontier(Node n) {
             return frontier.contains(n);
         }
 
@@ -116,16 +116,17 @@ public abstract class Strategy {
         private PriorityQueue<Node> heap;
 
 
-        public StrategyBestFirst( Heuristic h ) {
+        public StrategyBestFirst(Heuristic h) {
             super();
             heuristic = h;
             heap = new PriorityQueue<Node>(h);
         }
+
         public Node getAndRemoveLeaf() {
             return heap.poll();
         }
 
-        public void addToFrontier( Node n ) {
+        public void addToFrontier(Node n) {
             heap.add(n);
         }
 
@@ -139,7 +140,7 @@ public abstract class Strategy {
             return heap.isEmpty();
         }
 
-        public boolean inFrontier( Node n ) {
+        public boolean inFrontier(Node n) {
             return heap.contains(n);
         }
 

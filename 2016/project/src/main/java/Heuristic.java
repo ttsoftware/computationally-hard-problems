@@ -10,25 +10,27 @@ public abstract class Heuristic implements Comparator<Node> {
 
     /**
      * Compare method
+     *
      * @param n1
      * @param n2
      * @return
      */
-    public int compare( Node n1, Node n2 ) {
-        return f( n1 ) - f( n2 );
+    public int compare(Node n1, Node n2) {
+        return f(n1) - f(n2);
     }
 
     /**
      * Heuristic function
      * Finds the distance from goal to the bo and from the agent to the box and combines them.
+     *
      * @param n
      * @return
      */
-    public int h( Node n ) {
+    public int h(Node n) {
 
         Map.Entry<String, List<String>> entry = n.problem.getRwithLowestNumberOfExtensions();
 
-        if(entry != null){
+        if (entry != null) {
             return entry.getValue().size();
         }
 
@@ -38,21 +40,22 @@ public abstract class Heuristic implements Comparator<Node> {
 
     /**
      * Abstract function for f() to be implemented in extensions
+     *
      * @param n
      * @return
      */
-    public abstract int f( Node n );
+    public abstract int f(Node n);
 
     /**
      * A* implementation
      */
     public static class AStar extends Heuristic {
         public AStar() {
-            super( );
+            super();
         }
 
-        public int f( Node n ) {
-            return n.g() + h( n );
+        public int f(Node n) {
+            return n.g() + h(n);
         }
 
         public String toString() {
@@ -67,16 +70,16 @@ public abstract class Heuristic implements Comparator<Node> {
         private int W;
 
         public WeightedAStar() {
-            super( );
+            super();
             W = 5; // You're welcome to test this out with different values, but for the reporting part you must at least indicate benchmarks for W = 5
         }
 
-        public int f( Node n ) {
-            return n.g() + W * h( n );
+        public int f(Node n) {
+            return n.g() + W * h(n);
         }
 
         public String toString() {
-            return String.format( "WA*(%d) evaluation", W );
+            return String.format("WA*(%d) evaluation", W);
         }
     }
 
@@ -86,11 +89,11 @@ public abstract class Heuristic implements Comparator<Node> {
     public static class Greedy extends Heuristic {
 
         public Greedy() {
-            super( );
+            super();
         }
 
-        public int f( Node n ) {
-            return h( n );
+        public int f(Node n) {
+            return h(n);
         }
 
         public String toString() {

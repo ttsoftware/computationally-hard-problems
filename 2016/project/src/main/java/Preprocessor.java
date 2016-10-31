@@ -6,7 +6,7 @@ import java.util.stream.Collectors;
  */
 public class Preprocessor {
 
-    public Problem preprocess(Problem problem){
+    public Problem preprocess(Problem problem) {
         String s = problem.getS();
 
         //Prune R for invalid extensions
@@ -21,15 +21,15 @@ public class Preprocessor {
         return preprocessed;
     }
 
-    private HashMap<String, List<String>> pruneR(Problem problem){
+    private HashMap<String, List<String>> pruneR(Problem problem) {
 
         HashSet<Character> RSet = new HashSet<>();
 
         problem.getT()
                 .forEach(t -> {
                     char[] temp = t.toCharArray();
-                    for(int i = 0; i < temp.length; i++){
-                        if(Character.isUpperCase(temp[i])){
+                    for (int i = 0; i < temp.length; i++) {
+                        if (Character.isUpperCase(temp[i])) {
                             RSet.add(temp[i]);
                         }
                     }
@@ -43,7 +43,7 @@ public class Preprocessor {
         for (Map.Entry<String, List<String>> R : problem.getR().entrySet()) {
 
             //Prunes not needed R values
-            if(!RSet.contains(R.getKey().charAt(0))) {
+            if (!RSet.contains(R.getKey().charAt(0))) {
                 Printer.preprocessor("Pruned R: " + R.getKey());
                 continue;
             }
@@ -59,7 +59,7 @@ public class Preprocessor {
 
     }
 
-    private List<String> pruneT(Problem problem){
+    private List<String> pruneT(Problem problem) {
         List<String> list = new ArrayList<>(problem.getT());
         Collections.sort(list, (o1, o2) -> o2.length() - o1.length());
 
@@ -67,10 +67,10 @@ public class Preprocessor {
 
         list.forEach(sorted -> {
             //Skip if it only contains lowercase letters
-            if(sorted.matches("[a-z]]")) return;
+            if (sorted.matches("[a-z]]")) return;
 
             //If prunedT contains sorted OR prunedT contains a superset of sorted, do not insert
-            if(! ( prunedT.contains(sorted) || prunedT.stream().anyMatch(pruned -> pruned.contains(sorted) ) ) ){
+            if (!(prunedT.contains(sorted) || prunedT.stream().anyMatch(pruned -> pruned.contains(sorted)))) {
                 prunedT.add(sorted);
             } else {
                 //prints the pruned T

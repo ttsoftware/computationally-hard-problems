@@ -24,7 +24,7 @@ public class Problem {
         this.extension = "Initial state";
     }
 
-    public Problem(Problem prev, String key, String extension){
+    public Problem(Problem prev, String key, String extension) {
         //Copy old data structures
         this.s = prev.getS();
         this.R = new HashMap<>(prev.getR());
@@ -71,11 +71,11 @@ public class Problem {
         this.R = r;
     }
 
-    public boolean isValid(){
+    public boolean isValid() {
         return this.isValid;
     }
 
-    private boolean validate(List<String> editedTs){
+    private boolean validate(List<String> editedTs) {
         //replace all uppercase letters and matches against s
 //        List<Tuple> list =
         boolean allTsAreValid = editedTs.stream()
@@ -110,11 +110,11 @@ public class Problem {
 //        list.forEach(tup -> System.out.println("Pattern: " + tup.pat.pattern() + ", match: " + tup.match.matches()));
     }
 
-    public void pruneProblem(){
+    public void pruneProblem() {
         this.R = pruneRForInvalidExtensions();
     }
 
-    private HashMap<String, List<String>> pruneRForInvalidExtensions(){
+    private HashMap<String, List<String>> pruneRForInvalidExtensions() {
         HashMap<String, List<String>> prunedR = new HashMap<>(this.R.size());
         this.futureProblems = new HashMap<>(this.R.size());
         this.R.entrySet()
@@ -128,7 +128,7 @@ public class Problem {
                             .forEach(extension -> {
                                 Problem temp = new Problem(this, R, extension);
 
-                                if(temp.isValid()){
+                                if (temp.isValid()) {
                                     //Store future problem - if we decide to continue work on this one, no need to process it again
                                     this.futureProblems.get(R).add(temp);
                                     prunedR.get(R).add(extension);
@@ -144,16 +144,16 @@ public class Problem {
         return prunedR;
     }
 
-    public List<Problem> getFutureProblems(String key){
+    public List<Problem> getFutureProblems(String key) {
         return this.futureProblems.get(key);
     }
 
-    public Map.Entry<String, List<String>> getRwithLowestNumberOfExtensions(){
+    public Map.Entry<String, List<String>> getRwithLowestNumberOfExtensions() {
         Optional<Map.Entry<String, List<String>>> min = this.R.entrySet()
                 .stream()
                 .min((entry1, entry2) -> entry1.getValue().size() - entry2.getValue().size());
 
-        if(min.isPresent()){
+        if (min.isPresent()) {
             return min.get();
         }
 

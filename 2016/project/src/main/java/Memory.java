@@ -8,7 +8,7 @@ public class Memory {
     public static final int timeLimit = 180;
 
     public static float used() {
-        return ( runtime.totalMemory() - runtime.freeMemory() ) / mb;
+        return (runtime.totalMemory() - runtime.freeMemory()) / mb;
     }
 
     public static float free() {
@@ -24,10 +24,10 @@ public class Memory {
     }
 
     public static boolean shouldEnd() {
-        return ( used() / max() > limitRatio );
+        return (used() / max() > limitRatio);
     }
 
     public static String stringRep() {
-        return String.format( "[Used: %.2f MB, Free: %.2f MB, Alloc: %.2f MB, MaxAlloc: %.2f MB]", used(), free(), total(), max() );
+        return String.format("[Used: %.2f MB, Free: %.2f MB, Alloc: %.2f MB, MaxAlloc: %.2f MB]", used(), free(), total(), max());
     }
 }
