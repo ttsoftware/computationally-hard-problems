@@ -21,16 +21,17 @@ public class MainTest {
 
         Printer.preprocessor = false;
         Printer.info = false;
+        // Printer.result = false;
+        /*
+        System.out.println("Warming up");
+        for (int i = 0; i < 200; i++) {
+            Main.main(new String[]{args[2]});
+        }
+        */
+
         Printer.result = true;
 
-//        System.out.println("Warming up");
-//        for(int i = 0; i < 1; i++){
-//            Main.main(new String[]{args[0]});
-//        }
-
-        Printer.result = true;
-
-        for(String arg : args){
+        for (String arg : args) {
 
             System.out.println("File: " + Paths.get(arg).getFileName().toString());
             Stopwatch watch = Stopwatch.createStarted();

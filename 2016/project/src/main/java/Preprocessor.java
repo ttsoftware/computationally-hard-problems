@@ -21,6 +21,11 @@ public class Preprocessor {
         return preprocessed;
     }
 
+    /**
+     * Bound by O(|R|*s)
+     * @param problem
+     * @return
+     */
     private HashMap<String, List<String>> pruneR(Problem problem) {
 
         HashSet<Character> RSet = new HashSet<>();
@@ -59,22 +64,27 @@ public class Preprocessor {
 
     }
 
+    /**
+     * Bound by O(|T|^2 + |T|) = O(|T|^2)
+     * @param problem
+     * @return
+     */
     private List<String> pruneT(Problem problem) {
         List<String> list = new ArrayList<>(problem.getT());
         Collections.sort(list, (o1, o2) -> o2.length() - o1.length());
 
         List<String> prunedT = new ArrayList<>(list.size());
 
-        list.forEach(sorted -> {
+        list.forEach(t -> {
             //Skip if it only contains lowercase letters
-            if (sorted.matches("[a-z]]")) return;
+            if (t.matches("^[a-z]+$")) return;
 
             //If prunedT contains sorted OR prunedT contains a superset of sorted, do not insert
-            if (!(prunedT.contains(sorted) || prunedT.stream().anyMatch(pruned -> pruned.contains(sorted)))) {
-                prunedT.add(sorted);
+            if (!(prunedT.contains(t) || prunedT.stream().anyMatch(pruned -> pruned.contains(t)))) {
+                prunedT.add(t);
             } else {
                 //prints the pruned T
-                Printer.preprocessor("Pruned T: " + sorted);
+                Printer.preprocessor("Pruned T: " + t);
             }
         });
 

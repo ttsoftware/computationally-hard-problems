@@ -11,7 +11,6 @@ public class SearchClient {
 
     public Node Search(Strategy strategy) {
 
-
         strategy.addToFrontier(this.initialState);
 
         Node leafNode = null;
@@ -33,6 +32,8 @@ public class SearchClient {
             if (strategy.frontierIsEmpty()) {
                 Printer.info("Frontier is empty. Returns null.");
                 Printer.info(strategy.searchStatus());
+                Printer.result("Explored nodes: " + iterations);
+
                 return null;
             }
 
@@ -42,17 +43,14 @@ public class SearchClient {
                 Printer.info("Summary for " + strategy);
                 Printer.info("Found solution of length " + leafNode.g());
                 Printer.info(strategy.searchStatus());
+                Printer.result("Explored nodes: " + iterations);
+
                 return leafNode;
             }
 
-//            strategy.addToExplored( leafNode );
-            for (Node n : leafNode.getExpandedNodes()) { // The list of expanded nodes is shuffled randomly; see Node.java
+            // The list of expanded nodes is shuffled randomly; see Node.java
+            for (Node n : leafNode.getExpandedNodes()) {
                 strategy.addToFrontier(n);
-
-//                if ( !strategy.isExplored( n ) && !strategy.inFrontier( n ) ) {
-//
-//                }
-//            }
                 iterations++;
             }
         }

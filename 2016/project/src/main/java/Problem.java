@@ -1,6 +1,5 @@
 import java.util.*;
 import java.util.regex.Pattern;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 public class Problem {
@@ -114,6 +113,10 @@ public class Problem {
         this.R = pruneRForInvalidExtensions();
     }
 
+    /**
+     * Bound by O(|R|*|T|)
+     * @return
+     */
     private HashMap<String, List<String>> pruneRForInvalidExtensions() {
         HashMap<String, List<String>> prunedR = new HashMap<>(this.R.size());
         this.futureProblems = new HashMap<>(this.R.size());
