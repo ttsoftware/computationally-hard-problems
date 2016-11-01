@@ -32,7 +32,7 @@ public class SearchClient {
             if (strategy.frontierIsEmpty()) {
                 Printer.info("Frontier is empty. Returns null.");
                 Printer.info(strategy.searchStatus());
-                Printer.result("Explored nodes: " + iterations);
+                Printer.info("Explored nodes: " + iterations);
 
                 return null;
             }
@@ -43,7 +43,7 @@ public class SearchClient {
                 Printer.info("Summary for " + strategy);
                 Printer.info("Found solution of length " + leafNode.g());
                 Printer.info(strategy.searchStatus());
-                Printer.result("Explored nodes: " + iterations);
+                Printer.info("Explored nodes: " + iterations);
 
                 return leafNode;
             }
