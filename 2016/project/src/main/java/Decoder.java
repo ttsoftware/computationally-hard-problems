@@ -1,11 +1,15 @@
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 public class Decoder {
 
     public Problem decode(List<String> contents) {
         HashSet<Character> gammaLetters = new HashSet<>();
+
+        // remove empty strings
+        contents = contents.stream().filter(s -> !s.isEmpty()).collect(Collectors.toList());
 
         if (contents.size() < 4) {
             Printer.result("Not enough lines in file to contain k, s, t and R.");
@@ -57,7 +61,7 @@ public class Decoder {
                     map.put(R, new ArrayList<>(extensions));
 
                 } else {
-                    Printer.result("Did not found a matching pattern for r.");
+                    Printer.result("Did not found a matching pattern for R.");
                     System.exit(0);
                 }
             }
