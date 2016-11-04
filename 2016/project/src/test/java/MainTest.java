@@ -17,6 +17,7 @@ public class MainTest {
                 "src/test/resources/test04.SWE",
                 "src/test/resources/test05.SWE",
                 "src/test/resources/test06.SWE",
+                "src/test/resources/test07.SWE",
         };
 
         Printer.preprocessor = false;
