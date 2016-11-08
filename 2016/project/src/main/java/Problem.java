@@ -4,6 +4,7 @@ import java.util.stream.Collectors;
 
 public class Problem {
 
+    private HashMap<String, List<String>> originalR;
     private String s;
     private List<String> t;
     private HashMap<String, List<String>> R;
@@ -13,11 +14,13 @@ public class Problem {
     private final boolean isValid;
     public final String key;
     public final String extension;
+    public int totalValidTs = 0;
 
     public Problem(String s, List<String> t, HashMap<String, List<String>> r) {
         this.s = s;
         this.t = t;
-        R = r;
+        this.originalR = r;
+        this.R = r;
         this.isValid = true;
         this.key = "Initial state";
         this.extension = "Initial state";
@@ -26,6 +29,7 @@ public class Problem {
     public Problem(Problem prev, String key, String extension) {
         //Copy old data structures
         this.s = prev.getS();
+        this.originalR = new HashMap<>(prev.originalR);
         this.R = new HashMap<>(prev.getR());
         this.key = key;
         this.extension = extension;
@@ -43,7 +47,13 @@ public class Problem {
 
         //Store result and remove key from R
         this.R.remove(key);
+        this.originalR.remove(key);
+
         this.isValid = this.validate(editedTs);
+
+        if(Search.TYPE == SearchType.Optimize){
+            this.totalValidTs = validateAll(this.t);
+        }
     }
 
     public String getS() {
@@ -74,9 +84,30 @@ public class Problem {
         return this.isValid;
     }
 
+    private int validateAll(List<String> Ts){
+        //total number of valid strings
+        return (int) Ts.stream()
+                .map(ent -> {
+                    String pat = ent.replaceAll("[A-Z]", REPLACER);
+                    //Append a star if not a plus
+                    if (pat.charAt(pat.length() - 1) != '+') {
+                        pat += ADDON;
+                    }
+
+                    //Prepend a prefix in case there is a lowercase letter first
+                    if (pat.charAt(0) != '[') {
+                        pat = ADDON + pat;
+                    }
+
+                    return Pattern.compile(pat);
+                })
+                .filter(mat -> mat.matcher(s).matches())
+                .count();
+    }
+
     private boolean validate(List<String> editedTs) {
         //replace all uppercase letters and matches against s
-//        List<Tuple> list =
+
         boolean allTsAreValid = editedTs.stream()
                 .map(ent -> {
                     String pat = ent.replaceAll("[A-Z]", REPLACER);
@@ -115,12 +146,19 @@ public class Problem {
 
     /**
      * Bound by O(|R|*|T|)
-     * @return
      */
     private HashMap<String, List<String>> pruneRForInvalidExtensions() {
         HashMap<String, List<String>> prunedR = new HashMap<>(this.R.size());
         this.futureProblems = new HashMap<>(this.R.size());
-        this.R.entrySet()
+
+        HashMap<String, List<String>> Rset = this.R;
+
+        //Overwrite selected R in case of optimization - then use ALL valid R expansions
+        if(Search.TYPE == SearchType.Optimize){
+            Rset = this.originalR;
+        }
+
+        Rset.entrySet()
                 .forEach(entry -> {
                     //Get R and insert new key in pruned array
                     String R = entry.getKey();
@@ -135,7 +173,10 @@ public class Problem {
                                     //Store future problem - if we decide to continue work on this one, no need to process it again
                                     this.futureProblems.get(R).add(temp);
                                     prunedR.get(R).add(extension);
+                                } else if (Search.TYPE == SearchType.Optimize) {
+                                    this.futureProblems.get(R).add(temp);
                                 }
+
                             });
                 });
 
@@ -152,6 +193,8 @@ public class Problem {
     }
 
     public Map.Entry<String, List<String>> getRwithLowestNumberOfExtensions() {
+
+
         Optional<Map.Entry<String, List<String>>> min = this.R.entrySet()
                 .stream()
                 .min((entry1, entry2) -> entry1.getValue().size() - entry2.getValue().size());

@@ -3,6 +3,7 @@ import java.util.*;
 public class Node {
 
     private static Random rnd = new Random(1);
+    public static Node bestResult;
 
     public Node parent;
     public String key;
@@ -20,12 +21,18 @@ public class Node {
 
         if (parent == null) {
             g = 0;
+            bestResult = this;
             //Other init options?
 
         } else {
             this.key = problem.key;
             this.extension = problem.extension;
             g = parent.g() + 1;
+
+            //Store this result if better
+            if(bestResult.g() < this.g){
+                bestResult = this;
+            }
         }
     }
 
@@ -38,27 +45,37 @@ public class Node {
     }
 
     public boolean isGoalState() {
-        // termination state - if it is valid and all has been replaced.
-        return problem.getR().isEmpty() && problem.isValid();
+        if(Search.TYPE == SearchType.Decision){
+            return problem.getR().isEmpty() && problem.isValid();
+        } else {
+            return problem.getR().isEmpty();
+        }
+
     }
 
     public ArrayList<Node> getExpandedNodes() {
 
 
-        ArrayList<Node> expandedNodes = new ArrayList<Node>();
+        ArrayList<Node> expandedNodes = new ArrayList<>();
 
         Map.Entry<String, List<String>> entry = this.problem.getRwithLowestNumberOfExtensions();
 
         if (entry == null) return expandedNodes;
 
-        this.problem.getFutureProblems(entry.getKey())
-                .forEach(prob -> expandedNodes.add(new Node(this, prob)));
+        if(Search.TYPE == SearchType.Decision){
+            this.problem.getFutureProblems(entry.getKey())
+                    .forEach(prob -> expandedNodes.add(new Node(this, prob)));
 
-        //Something with looking through all the pruned states or so. Maybe.. I should move it here instead.
-        //Should create a node for each possible search
+            //Fine with a little shuffle maybe - not sure.
+            Collections.shuffle(expandedNodes, rnd);
+        } else {
+            // optimization problem - should always yield a result.. I think
+            this.problem.getFutureProblems(entry.getKey())
+                    .stream()
+                    .max((p1, p2) -> p1.totalValidTs - p2.totalValidTs)
+                    .ifPresent(p -> expandedNodes.add(new Node(this, p)));
+        }
 
-        //Fine with a little shuffle maybe - not sure.
-        Collections.shuffle(expandedNodes, rnd);
         return expandedNodes;
     }
 

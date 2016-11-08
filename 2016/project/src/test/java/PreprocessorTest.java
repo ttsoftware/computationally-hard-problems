@@ -18,7 +18,7 @@ public class PreprocessorTest {
 
         Problem problem = new Decoder().decode(lines);
         Stopwatch watch = Stopwatch.createStarted();
-        new Preprocessor().preprocess(problem);
+        new Preprocessor().preprocess(problem, true);
         watch.stop();
         System.out.println(watch.toString());
     }

@@ -1,5 +1,5 @@
 A:a
 B:b
 C:a
-D:b
-E:c
+D:d
+E:e

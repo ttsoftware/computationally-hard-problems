@@ -6,16 +6,18 @@ import java.util.stream.Collectors;
  */
 public class Preprocessor {
 
-    public Problem preprocess(Problem problem) {
+    public Problem preprocess(Problem problem, boolean pruneT) {
         String s = problem.getS();
 
         //Prune R for invalid extensions
         HashMap<String, List<String>> R = pruneR(problem);
 
         //Prune T for subsets of other sets
-        List<String> T = pruneT(problem);
+        List<String> T = problem.getT();
+        if(pruneT) {
+            T = pruneT(problem);
+        }
 
-        //True for init pruning
         Problem preprocessed = new Problem(s, T, R);
 
         return preprocessed;

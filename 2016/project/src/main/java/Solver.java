@@ -15,11 +15,26 @@ public class Solver {
      */
     public Node solve() {
 
-        Problem preprocessed = new Preprocessor().preprocess(initialProblem);
+        Problem preprocessed = new Preprocessor().preprocess(initialProblem, true);
 
         SearchClient sc = new SearchClient(preprocessed);
 
         Node n = sc.Search(new Strategy.StrategyBestFirst(new Heuristic.WeightedAStar()));
+
+        if(n != null){
+            return n;
+        }
+
+        //Continue search - no complete solution exists
+
+        //Do not prune the initial problem for T.
+        Search.TYPE = SearchType.Optimize;
+        preprocessed = new Preprocessor().preprocess(initialProblem, false);
+        sc = new SearchClient(preprocessed);
+        n = sc.Search(new Strategy.StrategyDFS());
+
+        System.out.println("Found solution for DFS with " + n.problem.totalValidTs + " valid strings out of " + preprocessed.getT().size() + " strings in T.");
+
         // Node n = sc.Search(new Strategy.StrategyBestFirst(new Heuristic.AStar()));
         // Node n = sc.Search(new Strategy.StrategyDFS());
 

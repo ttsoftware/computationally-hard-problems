@@ -19,7 +19,7 @@ public class Main {
         if (n != null) {
             String solutionFile = new File(filename).getName().replace(".SWE", "") + ".SOL";
             FileWriter outputFile = new FileWriter(solutionFile);
-            Printer.result("YES");
+//            Printer.result("YES");
             HashMap<String, String> result = n.getResult();
             problem.getR()
                     .forEach((key, val) -> {
