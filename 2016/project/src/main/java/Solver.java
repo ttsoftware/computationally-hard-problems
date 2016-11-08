@@ -33,10 +33,7 @@ public class Solver {
         sc = new SearchClient(preprocessed);
         n = sc.Search(new Strategy.StrategyDFS());
 
-        System.out.println("Found solution for DFS with " + n.problem.totalValidTs + " valid strings out of " + preprocessed.getT().size() + " strings in T.");
-
-        // Node n = sc.Search(new Strategy.StrategyBestFirst(new Heuristic.AStar()));
-        // Node n = sc.Search(new Strategy.StrategyDFS());
+//        System.out.println("Found solution for DFS with " + n.problem.totalValidTs + " valid strings out of " + preprocessed.getT().size() + " strings in T.");
 
         return n;
     }

@@ -17,31 +17,23 @@ public class Main {
         Node n = solver.solve();
 
         if (n != null) {
-            String solutionFile = new File(filename).getName().replace(".SWE", "") + ".SOL";
-            FileWriter outputFile = new FileWriter(solutionFile);
+            //String solutionFile = new File(filename).getName().replace(".SWE", "") + ".SOL";
+            //FileWriter outputFile = new FileWriter(solutionFile);
 //            Printer.result("YES");
+
             HashMap<String, String> result = n.getResult();
             problem.getR()
                     .forEach((key, val) -> {
-                        try {
 
-                            String extension = val.get(0);
+                        String extension = val.get(0);
 
-                            if (result.containsKey(key)) {
-                                extension = result.get(key);
-                            }
-
-                            outputFile.append(key + ":" + extension + "\n");
-
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                            System.exit(1);
+                        if (result.containsKey(key)) {
+                            extension = result.get(key);
                         }
+
+                        Printer.result(key + ":" + extension);
+
                     });
-
-            outputFile.flush();
-            outputFile.close();
-
         } else {
             Printer.result("NO");
         }
