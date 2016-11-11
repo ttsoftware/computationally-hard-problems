@@ -1,3 +1,5 @@
+import java.util.List;
+
 /**
  * Created by Anders on 26/10/2016.
  */
@@ -18,7 +20,7 @@ public class SearchClient {
         int iterations = 0;
         while (true) {
             if (iterations % 10 == 0) {
-                Printer.info(strategy.searchStatus());
+                Printer.result(strategy.searchStatus());
             }
             if (Memory.shouldEnd()) {
                 Printer.info(String.format("Memory limit almost reached, terminating search %s\n", Memory.stringRep()));
@@ -48,11 +50,16 @@ public class SearchClient {
                 return leafNode;
             }
 
+            List<Node> nodes = leafNode.getExpandedNodes();
+
+            System.out.println("Leaves: "+ nodes.size());
             // The list of expanded nodes is shuffled randomly; see Node.java
-            for (Node n : leafNode.getExpandedNodes()) {
+            for (Node n : nodes) {
+                System.out.println("Leavs");
                 strategy.addToFrontier(n);
                 iterations++;
             }
+            System.out.println("iterations: " + iterations);
         }
     }
 }

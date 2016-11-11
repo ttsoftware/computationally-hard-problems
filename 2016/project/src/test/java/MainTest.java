@@ -15,7 +15,8 @@ public class MainTest {
 //                "src/test/resources/test02.SWE",
 //                "src/test/resources/test03.SWE",
 //                "src/test/resources/test04.SWE",
-                "src/test/resources/test05.SWE",
+//                "src/test/resources/test05.SWE",
+                "src/test/resources/contest01.SWE",
 //                "src/test/resources/test06.SWE",
 //                "src/test/resources/test07.SWE",
         };

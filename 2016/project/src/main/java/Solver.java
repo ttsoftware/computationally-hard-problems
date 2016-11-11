@@ -15,21 +15,27 @@ public class Solver {
      */
     public Node solve() {
 
-        Problem preprocessed = new Preprocessor().preprocess(initialProblem, true);
+        Problem preprocessed;
+        SearchClient sc;
+        Node n;
 
-        SearchClient sc = new SearchClient(preprocessed);
-
-        Node n = sc.Search(new Strategy.StrategyBestFirst(new Heuristic.WeightedAStar()));
-
-        if(n != null){
-            return n;
-        }
+//         preprocessed = new Preprocessor().preprocess(initialProblem, true);
+//         sc = new SearchClient(preprocessed);
+//
+//        n = sc.Search(new Strategy.StrategyBestFirst(new Heuristic.WeightedAStar()));
+//
+//        if(n != null){
+//            return n;
+//        }
 
         //Continue search - no complete solution exists
+
+        System.out.println("switched to DFS");
 
         //Do not prune the initial problem for T.
         Search.TYPE = SearchType.Optimize;
         preprocessed = new Preprocessor().preprocess(initialProblem, false);
+        System.out.println("Preprocessed");
         sc = new SearchClient(preprocessed);
         n = sc.Search(new Strategy.StrategyDFS());
 
